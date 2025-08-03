@@ -1,0 +1,40 @@
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: ["air"]
+    networks:
+      - wo-app
+  go:
+    labels:
+      devcontainer.local: "true"
+    container_name: go
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ../backend:/app:cached
+    command: sleep infinity
+    ports:
+    - 8080:8080
+    networks:
+      - wo-app
+  react:
+    labels:
+      devcontainer.local: "true"
+    container_name: react
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    volumes:
+      - ../frontend:/app
+    command: sleep infinity
+    ports:
+      - 5173:5173
+    networks:
+      - wo-app 
+networks:
+  wo-app:

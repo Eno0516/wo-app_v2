@@ -1,0 +1,8 @@
+Item:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: init64
+    title:
+      type: string

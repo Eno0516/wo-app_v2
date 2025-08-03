@@ -1,0 +1,12 @@
+/plant:
+  get:
+    summary: Get all users
+    responses:
+      '200':
+        description: OK
+        content:
+          applicattion/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schema/manageplant.yaml#/Item'

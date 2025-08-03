@@ -1,0 +1,27 @@
+{
+    "name": "My Compose Dev Container",
+    "dockerComposeFile": "docker-compose.yaml",
+    "service": "dev",
+    "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+    "mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions":[
+							"golang.go",
+              "dbaeumer.vscode-eslint",
+              "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+   "forwardPorts": [5173,8080],
+    "features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}, 
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "20"
+        }
+     },
+    "postCreateCommand": "npm install -g @openapitools/openapi-generator-cli"
+}
