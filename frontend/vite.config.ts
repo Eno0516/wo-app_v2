@@ -7,6 +7,14 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 5173,
+    watch: {
+      usePolling: true,
+      interval: 100,
+      awaitWriteFinish: {
+        stabilityThreshold: 200,
+        pollInterval: 100
+      }
+    },
     proxy: {
       "/api": "http://localhost:8080"
     }

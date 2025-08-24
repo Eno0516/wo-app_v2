@@ -1,12 +1,13 @@
 import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './user/pages/HomePage';
+
 
 function App() {
   return (
-  <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-    <h1>🐯 こんにちは、虎太郎さん！</h1>
-    <p>このReact環境、ちゃんと動いてますよ！</p>
-  </div>
-
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+    </Routes>
   )
 }
 export default App
