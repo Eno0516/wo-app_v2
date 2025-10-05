@@ -8,6 +8,7 @@ interface ClickPopInputBoxProps{
     setIsVisible:Dispatch<SetStateAction<boolean>>
 }
 
+// 作物管理に必要な情報を入力するためのポップを出す
 function ClickPopInputBox({initial, onClose,isVisible, setIsVisible }:ClickPopInputBoxProps){
     const [value, setValue] = useState(initial)
     //モーダル表示管理

@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: Wo-App API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api
+paths:
+    $ref: '../api-specs/paths/manageplant.yaml'
+components:
+  schemas:
+    $ref: '../api-specs/schema/manageplant.yaml'

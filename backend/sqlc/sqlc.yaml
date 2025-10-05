@@ -1,0 +1,8 @@
+version: "2"
+packages:
+  - path: "internal/db"
+    name: "db"
+    engine: "postgresql"
+    schema: 
+    - "migrations/*.up.sql"
+    queries: "queries.sql"

@@ -6,7 +6,7 @@ function HomePage () {
                 <h1>学生農業団体「を」</h1>
                 <p>トップページ</p>
             </div>
-            <PagaChangeTextButton to="managePlant" text="作物管理ページへ" />
+            <PagaChangeTextButton to="/login" text="ログイン" />
         </>
     )
 }

@@ -1,0 +1,26 @@
+# 共通
+node_modules/
+dist/
+build/
+*.log
+.env
+.env.*.local
+
+# フロントエンド 
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+frontend/.cache/
+
+# バックエンド（Go）
+backend/bin/
+backend/tmp/
+backend/coverage/
+*.exe
+*.out
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

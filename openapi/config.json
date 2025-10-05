@@ -1,0 +1,8 @@
+{
+    "packageName": "autoAPI",
+    "apiPackage":"api",
+    "modulePackage":"model",
+    "enumPropertyNaming":"UPPERCASE",
+    "hideGenerationTimestamp":true,
+    "withGoCodegenComment":false
+}
