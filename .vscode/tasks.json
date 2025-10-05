@@ -2,9 +2,29 @@
     "version": "2.0.0",
     "tasks":[
         {
-            "label":"Generate OpenAPI",
+            "label":"redocly OpenAPI",
+            "type":"shell",
+            "command":"${workspaceFolder}/openapi/redocly.sh",
+            "group":{
+                "kind":"build",
+                "isDefault":true
+            },
+            "problemMatcher":[]
+        },
+        {
+            "label":"Generate OpenAPI Backend",
             "type":"shell",
             "command":"${workspaceFolder}/backend/.openapi/generate.sh",
+            "group":{
+                "kind":"build",
+                "isDefault":true
+            },
+            "problemMatcher":[]
+        },
+        {
+            "label":"Generate OpenAPI Frontend",
+            "type":"shell",
+            "command":"${workspaceFolder}/frontend/.openapi/generate.sh",
             "group":{
                 "kind":"build",
                 "isDefault":true

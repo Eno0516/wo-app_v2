@@ -1,10 +1,10 @@
 {
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.21.0"
+    "@openapitools/openapi-generator-cli": "^2.21.0",
+    "openapi-typescript-codegen": "^0.29.0"
   },
   "scripts": {
     "bundle-api": "swagger-cli bundle -o dist/openapi-bundle.yaml -t yaml api-specs/openapi.yaml",
     "generate-api": "openapi-generator-cli generate -i dist/openapi-bundled.yaml -g typescript-fetch -o generated/api-client"
   }
 }
-

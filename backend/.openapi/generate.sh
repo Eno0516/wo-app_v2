@@ -2,11 +2,10 @@
 set -e
 cd "$(dirname "$0")"
 
-echo "📦 Bundling openapi.yaml..."
-npx @redocly/cli bundle openapi.yaml --output bundled.yaml
+echo "⚙️ Generating Go Gin interfaces and types..."
+oapi-codegen \
+  -generate types,gin \
+  -o ../generated/api/api.gen.go \
+  -package api \
+  ../../openapi/bundled.yaml
 
-openapi-generator-cli generate \
-    -i bundled.yaml \
-    -g go \
-    -o ../generated/api \
-    -c config.json
