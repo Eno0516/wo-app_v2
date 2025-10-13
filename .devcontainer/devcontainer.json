@@ -23,5 +23,5 @@
             "version": "20"
         }
      },
-    "postCreateCommand": "npm install -g @openapitools/openapi-generator-cli"
+    "postCreateCommand": "npm install -g @openapitools/openapi-generator-cli && chmod +x /workspace/openapi/redocly.sh /workspace/frontend/.openapi/generate.sh"
 }

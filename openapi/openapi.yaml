@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://localhost:8080/api
 paths:
+  /login:
+    $ref: '../api-specs/paths/login.yaml'
+  /manageplant:
     $ref: '../api-specs/paths/manageplant.yaml'
-components:
-  schemas:
-    $ref: '../api-specs/schema/manageplant.yaml'

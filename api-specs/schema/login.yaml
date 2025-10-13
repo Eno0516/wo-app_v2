@@ -3,7 +3,7 @@ LoginOrder:
   properties:
     id:
       type: integer
-      format: init64
+      format: int64
     password:
       type: string
       format: password
@@ -12,4 +12,4 @@ LoginUser:
   properties:
     id:
       type: integer
-      format: init64
+      format: int64

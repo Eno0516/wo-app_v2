@@ -1,11 +1,11 @@
-/plant:
+
   get:
     summary: Get all users
     responses:
       '200':
         description: OK
         content:
-          applicattion/json:
+          application/json:
             schema:
               type: array
               items:

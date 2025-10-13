@@ -1,16 +1,16 @@
-/login:
+
   post:
     summary: Order to login
     requestBody:
       required: true
       content:
-        applicattion/json:
+        application/json:
           schema:
-            ref: '../schema/login.yaml#/LoginOrder'
-    response:
+            $ref: '../schema/login.yaml#/LoginOrder'
+    responses:
       '200':
         description: OK
         content:
-          applicattion/json:
+          application/json:
             schema:
-              ref: '../schema/login.yaml#/LoginUser'
+              $ref: '../schema/login.yaml#/LoginUser'
