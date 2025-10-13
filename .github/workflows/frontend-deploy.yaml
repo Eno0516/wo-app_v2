@@ -29,3 +29,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AGRICULTURE_WO }}'
           channelId: live
           projectId: agriculture-wo
+          entryPoint: ./frontend
