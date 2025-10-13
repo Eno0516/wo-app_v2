@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DefaultService } from "../../generated/api";
+import { type LoginOrder } from "../../generated/api/models/LoginOrder";
 
 function LoginPage() {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
 
     const handleSubmit = async () => {
-        const navigate = useNavigate()
         // ログインリクエスト
-        const res = await
-        if (res.ok) {
-            const data = await res.json()
-            localStorage.setItem("token",data.token)
+        const requestBody:LoginOrder = {
+            id: 1,
+            password: "secret"
+        }
+        const res = await DefaultService.postLogin(requestBody)
+        if (res.id) {
+            localStorage.setItem("id",String(res.id))
             navigate("/memberPage")
         } else {
             navigate("/")
