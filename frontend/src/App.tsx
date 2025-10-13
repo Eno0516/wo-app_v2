@@ -1,6 +1,6 @@
 import './App.css'
-import { useRoutes, BrowserRouter } from 'react-router-dom';
-import {routes} from './user/routes/router'
+import { useRoutes } from 'react-router-dom';
+import routes from './routes/index'
 
 function AppRoutes() {
   return useRoutes(routes)
@@ -8,9 +8,7 @@ function AppRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
       <AppRoutes />
-    </BrowserRouter>
   )
 }
 export default App
