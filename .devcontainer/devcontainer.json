@@ -18,10 +18,12 @@
     },
    "forwardPorts": [5173,8080],
     "features": {
-        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}, 
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            "moby": false
+        }, 
         "ghcr.io/devcontainers/features/node:1": {
             "version": "20"
         }
      },
-    "postCreateCommand": "npm install -g @openapitools/openapi-generator-cli && chmod +x /workspace/openapi/redocly.sh /workspace/frontend/.openapi/generate.sh"
+    "postCreateCommand": "npm install -g @openapitools/openapi-generator-cli && chmod +x /workspace/openapi/redocly.sh /workspace/frontend/.openapi/generate.sh && cd backend && go mod download"
 }
