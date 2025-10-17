@@ -9,6 +9,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
  && npm install -g @openapitools/openapi-generator-cli \
  && npm install -g @redocly/cli \
  && go install github.com/air-verse/air@latest \
+ && go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest \
  && ln -s $(go env GOPATH)/bin/air /usr/local/bin/air \
  && rm -rf /var/lib/apt/lists/*
 
