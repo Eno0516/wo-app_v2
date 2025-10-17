@@ -1,7 +1,11 @@
 name: Deploy to Firebase Hosting
 
 on:
-  workflow_dispatch:   # ← GitHub GUI から「Run workflow」で実行できる
+  workflow_dispatch:  
+  workflow_run:
+    workflows: ["frontend-CI"]
+    types:
+      - completed 
 
 jobs:
   deploy:
