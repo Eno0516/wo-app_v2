@@ -30,10 +30,10 @@ export class DefaultService {
      * @returns Item OK
      * @throws ApiError
      */
-    public static getManageplant(): CancelablePromise<Array<Item>> {
+    public static getManagePlant(): CancelablePromise<Array<Item>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/manageplant',
+            url: '/managePlant',
         });
     }
 }
