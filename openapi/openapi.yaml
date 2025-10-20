@@ -7,5 +7,5 @@ servers:
 paths:
   /login:
     $ref: '../api-specs/paths/login.yaml'
-  /manageplant:
-    $ref: '../api-specs/paths/manageplant.yaml'
+  /managePlant:
+    $ref: '../api-specs/paths/managePlant.yaml'

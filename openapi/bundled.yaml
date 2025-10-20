@@ -21,7 +21,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginUser'
-  /manageplant:
+  /managePlant:
     get:
       summary: Get all users
       responses:

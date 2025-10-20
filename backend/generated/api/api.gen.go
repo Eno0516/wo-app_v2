@@ -9,15 +9,32 @@ import (
 
 // Item defines model for Item.
 type Item struct {
-	Id    *int    `json:"id,omitempty"`
+	Id    *int64  `json:"id,omitempty"`
 	Title *string `json:"title,omitempty"`
 }
 
+// LoginOrder defines model for LoginOrder.
+type LoginOrder struct {
+	Id       *int64  `json:"id,omitempty"`
+	Password *string `json:"password,omitempty"`
+}
+
+// LoginUser defines model for LoginUser.
+type LoginUser struct {
+	Id *int64 `json:"id,omitempty"`
+}
+
+// PostLoginJSONRequestBody defines body for PostLogin for application/json ContentType.
+type PostLoginJSONRequestBody = LoginOrder
+
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Order to login
+	// (POST /login)
+	PostLogin(c *gin.Context)
 	// Get all users
-	// (GET /plant)
-	GetPlant(c *gin.Context)
+	// (GET /managePlant)
+	GetManagePlant(c *gin.Context)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -29,8 +46,8 @@ type ServerInterfaceWrapper struct {
 
 type MiddlewareFunc func(c *gin.Context)
 
-// GetPlant operation middleware
-func (siw *ServerInterfaceWrapper) GetPlant(c *gin.Context) {
+// PostLogin operation middleware
+func (siw *ServerInterfaceWrapper) PostLogin(c *gin.Context) {
 
 	for _, middleware := range siw.HandlerMiddlewares {
 		middleware(c)
@@ -39,7 +56,20 @@ func (siw *ServerInterfaceWrapper) GetPlant(c *gin.Context) {
 		}
 	}
 
-	siw.Handler.GetPlant(c)
+	siw.Handler.PostLogin(c)
+}
+
+// GetManagePlant operation middleware
+func (siw *ServerInterfaceWrapper) GetManagePlant(c *gin.Context) {
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetManagePlant(c)
 }
 
 // GinServerOptions provides options for the Gin server.
@@ -69,5 +99,6 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 		ErrorHandler:       errorHandler,
 	}
 
-	router.GET(options.BaseURL+"/plant", wrapper.GetPlant)
+	router.POST(options.BaseURL+"/login", wrapper.PostLogin)
+	router.GET(options.BaseURL+"/managePlant", wrapper.GetManagePlant)
 }
