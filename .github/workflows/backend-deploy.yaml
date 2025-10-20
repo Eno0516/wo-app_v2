@@ -1,5 +1,9 @@
 name: CD  to Render
 
+permissions:
+  contents: read
+  packages: write
+  
 on:
   workflow_dispatch:
 
