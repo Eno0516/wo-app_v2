@@ -12,7 +12,7 @@ function LoginPage() {
         // ログインリクエスト
         const requestBody:LoginOrder = {
             id: 1,
-            password: "secret"
+            password: password
         }
         const res = await DefaultService.postLogin(requestBody)
         if (res.id) {
