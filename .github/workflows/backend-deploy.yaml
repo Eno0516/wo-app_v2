@@ -30,16 +30,6 @@ jobs:
           docker build -f backend/Dockerfile.prod -t $IMAGE .
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push $IMAGE
-
-      - name: Debug secrets
-        run: |
-         echo "SERVICE_ID length: ${#RENDER_SERVICE_ID}"
-         echo "API_KEY length: ${#RENDER_API_KEY}"
-         echo curl -X POST -d '{"clearCache": false}'
-        env:
-         RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-         RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
-
         
       - name: Trigger Render Deploy
         run: |
