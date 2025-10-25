@@ -30,7 +30,7 @@ jobs:
           docker build -f backend/Dockerfile.prod -t $IMAGE .
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push $IMAGE
-          
+
       - name: Debug secrets
         run: |
          echo "SERVICE_ID length: ${#RENDER_SERVICE_ID}"
@@ -46,5 +46,5 @@ jobs:
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -d '{"clearCache":false}' \
+            -d '{"clearCache": false}' \
             https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
