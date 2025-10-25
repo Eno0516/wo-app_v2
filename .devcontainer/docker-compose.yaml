@@ -5,6 +5,8 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspace:cached
+    env_file:
+      - ../backend/.env.local
     command: ["air"]
     networks:
       - wo-app
@@ -49,6 +51,8 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432" 
+    networks:
+      - wo-app
 volumes:
   pgdata:
 networks:
