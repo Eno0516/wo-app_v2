@@ -13,7 +13,9 @@ import (
 func main() {
 	// DBとの接続
 	// ローカル環境でのみ.envをロード
-	_ = godotenv.Load(".env.local")
+	if os.Getenv("GO_ENV") != "prod" {
+		_ = godotenv.Load(".env.local")
+	}
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
