@@ -17,6 +17,7 @@ func main() {
 		_ = godotenv.Load(".env.local")
 	}
 	dsn := os.Getenv("DATABASE_URL")
+	log.Printf("GO_ENV=%s, DATABASE_URL length=%d", os.Getenv("GO_ENV"), len(os.Getenv("DATABASE_URL")))
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
 	}
@@ -26,7 +27,11 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 	fmt.Println("DB connected!!")
+
+	// API Routeの初期化
 	r := initialize.InitAPI()
+
+	// Server始動
 	errServer := r.Run(":8080")
 	if errServer != nil {
 		log.Fatalf("Server Error")
