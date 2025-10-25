@@ -35,7 +35,7 @@ jobs:
         run: |
           curl -X POST \
             -H "Accept: application/json" \
-            -H "Content-Type: application/json" \
+            -H "Content-Type: applicatiSon/json" \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -d "{\"clearCache\":false}" \
+            -d '{"clearCache":false}' \
             https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
