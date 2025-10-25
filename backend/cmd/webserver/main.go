@@ -4,14 +4,20 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/Eno0516/wo-app-ver2/backend/internal/initialize"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	// DBとの接続
-	// いったん試しでローカル文字列を与えているが、環境変数に移行する
-	dsn := "postgres://devuser:devpass@db:5432/devdb"
+	// ローカル環境でのみ.envをロード
+	_ = godotenv.Load(".env.local")
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		log.Fatal("DATABASE_URL is not set")
+	}
 	conn, err := initialize.InitDB(dsn)
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v\n", err)
