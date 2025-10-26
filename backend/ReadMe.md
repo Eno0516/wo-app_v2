@@ -11,6 +11,7 @@
         * 受け取ったrequest bodyをJSONパースする
         * serviceに定義した単一の関数にそのbodyを渡し、responseを返却させる
         * フロントエンドにresponseを返す
+     * 下階層のエラーはこの層でハンドリングしてhttp responseとしてフロントに返す
 * **service**
   * ロジックの実装部分
   * contoroller層から呼ばれる関数については、
@@ -19,7 +20,7 @@
   を実装
 * **repositry**
   * 外部サービスとの接続部分
-    * DBなど
+    * DB
   
 ### generated ディレクトリ
 * **api** ※編集不可
