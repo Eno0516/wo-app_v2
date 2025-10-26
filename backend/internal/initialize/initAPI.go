@@ -9,11 +9,13 @@ import (
 // API登録の初期化処理
 func InitAPI() *gin.Engine {
 	router := gin.Default()
+	apiGroup := router.Group("/api")
 
+	// 増えたら追加する
 	impl := controller.DefaultAPIImpl{
 		ManagePlantGrid: controller.ManagePlantGridAPI{},
 		Login:           controller.LoginAPI{},
 	}
-	api.RegisterHandlers(router, impl)
+	api.RegisterHandlers(apiGroup, impl)
 	return router
 }

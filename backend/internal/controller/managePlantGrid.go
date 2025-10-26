@@ -9,6 +9,6 @@ import (
 type ManagePlantGridAPI struct{}
 
 // "/api/plant"
-func (api ManagePlantGridAPI) GetManagePlant(c *gin.Context) {
+func (m ManagePlantGridAPI) GetManagePlant(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"plant": "rose"})
 }
