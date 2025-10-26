@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type LoginUser = {
-    id?: number;
+    uuid?: string;
 };
 

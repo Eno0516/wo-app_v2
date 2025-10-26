@@ -5,6 +5,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // Item defines model for Item.
@@ -21,7 +22,7 @@ type LoginOrder struct {
 
 // LoginUser defines model for LoginUser.
 type LoginUser struct {
-	Id *int64 `json:"id,omitempty"`
+	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // PostLoginJSONRequestBody defines body for PostLogin for application/json ContentType.
