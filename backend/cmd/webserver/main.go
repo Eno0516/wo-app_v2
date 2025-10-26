@@ -31,7 +31,8 @@ func main() {
 	// sqlcの初期化
 
 	// API Routeの初期化
-	r := initialize.InitAPI()
+	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
+	r := initialize.InitAPI(allowedOrigin)
 
 	// Server始動
 	errServer := r.Run(":8080")
