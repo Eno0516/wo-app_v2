@@ -1,6 +1,8 @@
 package initialize
 
 import (
+	"time"
+
 	"github.com/Eno0516/wo-app-ver2/backend/generated/api"
 	"github.com/Eno0516/wo-app-ver2/backend/internal/controller"
 	"github.com/gin-contrib/cors"
@@ -11,9 +13,12 @@ import (
 func InitAPI(allowdOrigin string) *gin.Engine {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{allowdOrigin},
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
+		AllowOrigins:     []string{allowdOrigin},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
 	}))
 	apiGroup := router.Group("/api")
 
