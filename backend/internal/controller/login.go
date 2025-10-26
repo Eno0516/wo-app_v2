@@ -25,5 +25,5 @@ func (l *LoginAPI) PostLogin(c *gin.Context) {
 	}
 
 	res := l.svc.LoginUserCheck(req)
-	c.JSON(http.StatusOK, gin.H{"id": res.Uuid})
+	c.JSON(http.StatusOK, res)
 }
