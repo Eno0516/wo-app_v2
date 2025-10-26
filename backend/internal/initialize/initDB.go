@@ -7,7 +7,7 @@ import (
 )
 
 func InitDB(dsn string) (*pgx.Conn, error) {
-
+	// DBとの接続
 	conn, err := pgx.Connect(context.Background(), dsn)
 	if err != nil {
 		return nil, err

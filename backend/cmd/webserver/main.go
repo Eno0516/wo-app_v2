@@ -28,6 +28,7 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 	fmt.Println("DB connected!!")
+	// sqlcの初期化
 
 	// API Routeの初期化
 	r := initialize.InitAPI()

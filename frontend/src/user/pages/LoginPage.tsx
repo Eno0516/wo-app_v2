@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DefaultService } from "../../generated/api";
+import { apiClient } from "../../api/client"; 
 import { type LoginOrder } from "../../generated/api/models/LoginOrder";
 
 function LoginPage() {
@@ -8,17 +8,25 @@ function LoginPage() {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
         // ログインリクエスト
         const requestBody:LoginOrder = {
             id: userName,
             password: password
         }
-        const res = await DefaultService.postLogin(requestBody)
-        if (res.id) {
-            localStorage.setItem("id",String(res.id))
-            navigate("/memberPage")
-        } else {
+        console.log("req",requestBody)
+        try {
+            const res = await apiClient.postLogin(requestBody)
+            console.log("res",res)
+            if (res.uuid) {
+                localStorage.setItem("id",String(res.uuid))
+                navigate("/memberPage")
+            } else {
+                navigate("/")
+            }
+        } catch (err) {
+            console.error("login failed",err)
             navigate("/")
         }
     }
