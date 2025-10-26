@@ -11,6 +11,7 @@ services:
     networks:
       - wo-app
   go:
+    restart: always
     labels:
       devcontainer.local: "true"
     container_name: go
@@ -19,6 +20,7 @@ services:
       dockerfile: backend/Dockerfile.dev
     volumes:
       - ../backend:/app:cached
+    working_dir: /app/cmd/webserver
     command: ["/usr/local/bin/air"]
     ports:
     - "8080:8080"
