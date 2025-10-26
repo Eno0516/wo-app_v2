@@ -7,38 +7,22 @@ package sql
 
 import (
 	"context"
-	"database/sql"
-
-	"github.com/google/uuid"
 )
 
 const getLoginUser = `-- name: GetLoginUser :one
-SELECT id, uuid, username, created_at, updated_at
+SELECT id, uuid, username, password_hash, created_at, updated_at
 FROM users
 WHERE username = $1
-  AND password_hash = crypt($2, password_hash)
 `
 
-type GetLoginUserParams struct {
-	Username string
-	Crypt    string
-}
-
-type GetLoginUserRow struct {
-	ID        int32
-	Uuid      uuid.UUID
-	Username  string
-	CreatedAt sql.NullTime
-	UpdatedAt sql.NullTime
-}
-
-func (q *Queries) GetLoginUser(ctx context.Context, arg GetLoginUserParams) (GetLoginUserRow, error) {
-	row := q.db.QueryRowContext(ctx, getLoginUser, arg.Username, arg.Crypt)
-	var i GetLoginUserRow
+func (q *Queries) GetLoginUser(ctx context.Context, username string) (User, error) {
+	row := q.db.QueryRowContext(ctx, getLoginUser, username)
+	var i User
 	err := row.Scan(
 		&i.ID,
 		&i.Uuid,
 		&i.Username,
+		&i.PasswordHash,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)

@@ -1,5 +1,4 @@
 -- name: GetLoginUser :one
-SELECT id, uuid, username, created_at, updated_at
+SELECT id, uuid, username, password_hash, created_at, updated_at
 FROM users
-WHERE username = $1
-  AND password_hash = crypt($2, password_hash);
+WHERE username = $1;
