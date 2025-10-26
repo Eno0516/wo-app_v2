@@ -12,6 +12,7 @@ func InitAPI() *gin.Engine {
 
 	impl := controller.DefaultAPIImpl{
 		ManagePlantGrid: controller.ManagePlantGridAPI{},
+		Login:           controller.LoginAPI{},
 	}
 	api.RegisterHandlers(router, impl)
 	return router

@@ -18,6 +18,7 @@ func main() {
 	}
 	dsn := os.Getenv("DATABASE_URL")
 	log.Printf("GO_ENV=%s, DATABASE_URL length=%d", os.Getenv("GO_ENV"), len(os.Getenv("DATABASE_URL")))
+	log.Printf("dsn=%s", dsn)
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
 	}
