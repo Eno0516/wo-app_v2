@@ -5,8 +5,8 @@ import (
 )
 
 type DefaultAPIImpl struct {
-	ManagePlantGrid ManagePlantGridAPI
-	Login           LoginAPI
+	ManagePlantGrid *ManagePlantGridAPI
+	Login           *LoginAPI
 }
 
 func (impl DefaultAPIImpl) GetManagePlant(c *gin.Context) {

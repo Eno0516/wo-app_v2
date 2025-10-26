@@ -9,7 +9,11 @@ import (
 )
 
 type LoginAPI struct {
-	s *service.Service
+	svc *service.Service
+}
+
+func NewLoginAPI(svc *service.Service) *LoginAPI {
+	return &LoginAPI{svc: svc}
 }
 
 // "/api/login"
@@ -20,6 +24,6 @@ func (l *LoginAPI) PostLogin(c *gin.Context) {
 		return
 	}
 
-	res := l.s.LoginUserCheck(req)
+	res := l.svc.LoginUserCheck(req)
 	c.JSON(http.StatusOK, gin.H{"id": res.Uuid})
 }

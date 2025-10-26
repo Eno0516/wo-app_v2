@@ -28,11 +28,13 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 	fmt.Println("DB connected!!")
-	// sqlcの初期化
+
+	// Layer間の連携の初期化
+	svc := initialize.InitLayerConect(dsn)
 
 	// API Routeの初期化
 	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
-	r := initialize.InitAPI(allowedOrigin)
+	r := initialize.InitAPI(allowedOrigin, svc)
 
 	// Server始動
 	errServer := r.Run(":8080")

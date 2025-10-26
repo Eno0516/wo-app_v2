@@ -5,5 +5,9 @@ import (
 )
 
 type Service struct {
-	dbRepo db.DBRepositry
+	dbRepo *db.DBRepositry
+}
+
+func NewService(dbRepo *db.DBRepositry) *Service {
+	return &Service{dbRepo: dbRepo}
 }

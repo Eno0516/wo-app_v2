@@ -7,3 +7,7 @@ import (
 type DBRepositry struct {
 	q *sql.Queries
 }
+
+func NewDBRepositry(q *sql.Queries) *DBRepositry {
+	return &DBRepositry{q: q}
+}
