@@ -14,7 +14,7 @@ func main() {
 	// DBとの接続
 	// ローカル環境でのみ.envをロード
 	if os.Getenv("GO_ENV") != "prod" {
-		_ = godotenv.Load(".env.local")
+		_ = godotenv.Load("/app/.env.local")
 	}
 	dsn := os.Getenv("DATABASE_URL")
 	log.Printf("GO_ENV=%s, DATABASE_URL length=%d", os.Getenv("GO_ENV"), len(os.Getenv("DATABASE_URL")))
@@ -31,6 +31,7 @@ func main() {
 
 	// Layer間の連携の初期化
 	svc := initialize.InitLayerConect(dsn)
+	fmt.Println("svc", svc)
 
 	// API Routeの初期化
 	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
