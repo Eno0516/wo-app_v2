@@ -1,4 +1,4 @@
-name: CD  to Render
+name: CD  to Render And Migrate Neon
 
 permissions:
   contents: read
@@ -38,3 +38,18 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+
+  migrate-Neon:
+    needs: backend-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.linux-amd64.tar.gz \
+          | tar -xz -C /usr/local/bin
+        
+      - name: Run migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          migrate -path ./db/migrations -database "$DATABASE_URL" up

@@ -11,7 +11,7 @@ function LoginPage() {
     const handleSubmit = async () => {
         // ログインリクエスト
         const requestBody:LoginOrder = {
-            id: 1,
+            id: userName,
             password: password
         }
         const res = await DefaultService.postLogin(requestBody)

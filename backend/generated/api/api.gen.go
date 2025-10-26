@@ -15,7 +15,7 @@ type Item struct {
 
 // LoginOrder defines model for LoginOrder.
 type LoginOrder struct {
-	Id       *int64  `json:"id,omitempty"`
+	Id       *string `json:"id,omitempty"`
 	Password *string `json:"password,omitempty"`
 }
 
