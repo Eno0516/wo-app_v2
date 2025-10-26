@@ -11,6 +11,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
  && npm install -g @redocly/cli \
  && go install github.com/air-verse/air@latest \
  && go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest \
+ && go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest \
  && ln -s $(go env GOPATH)/bin/air /usr/local/bin/air \
  && rm -rf /var/lib/apt/lists/*
 

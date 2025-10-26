@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 
+# ツールの用意
 # OpenAPI CLI
 npm install -g @openapitools/openapi-generator-cli
 npm install -g @openapitools/openapi-generator-cli 
 npm install -g @redocly/cli 
+# sqlc go
+go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 
 # Redocly / OpenAPI generator scriptsに実行権限
 chmod +x /workspace/openapi/redocly.sh /workspace/frontend/.openapi/generate.sh
