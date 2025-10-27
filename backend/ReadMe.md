@@ -21,6 +21,9 @@
 * **repositry**
   * 外部サービスとの接続部分
     * DB
+* **error**
+  * distributeError.go:controller層で使用するエラーを仕分けてフロントエンドに返す関数を用意
+  * createError.go:各レイヤーでエラーを投げるときに使用する関数を用意
   
 ### generated ディレクトリ
 * **api** ※編集不可
