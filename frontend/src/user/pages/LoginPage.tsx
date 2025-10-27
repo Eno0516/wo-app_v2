@@ -20,10 +20,10 @@ function LoginPage() {
             const res = await apiClient.postLogin(requestBody)
             console.log("res",res)
             if (res.uuid) {
-                localStorage.setItem("id",String(res.uuid))
-                navigate("/memberPage")
+                const uuid = res.uuid
+                navigate(`/memberPage?uuid=${uuid}`)
             } else {
-                navigate("/")
+                throw new Error ()
             }
         } catch (err) {
             console.error("login failed",err)
