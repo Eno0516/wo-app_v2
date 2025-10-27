@@ -17,17 +17,12 @@ func (s *Service) LoginUserCheck(item api.LoginOrder) (api.LoginUser, error) {
 		return api.LoginUser{}, appError.NewError(401, "Password Not Match", err)
 	}
 
-	var UserUUID uuid.UUID
-	if dbRes.Uuid != "" {
-		parsed, err := uuid.Parse(dbRes.Uuid)
-		if err != nil {
-			return api.LoginUser{}, appError.NewError(500, "uuid parse error", err)
-		}
-		UserUUID = parsed
+	parsed, err := uuid.Parse(dbRes.Uuid)
+	if err != nil {
+		return api.LoginUser{}, appError.NewError(500, "uuid parse error", err)
 	}
-
 	loginUser := api.LoginUser{
-		Uuid: &UserUUID,
+		Uuid: &parsed,
 	}
 	return loginUser, nil
 }

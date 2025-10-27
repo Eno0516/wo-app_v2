@@ -20,7 +20,7 @@ func (r *DBRepositry) GetLoginUser(username string) (GetLoginUserRes, error) {
 	}
 	log.Println("db", db)
 	return GetLoginUserRes{
-		Uuid:         db.Username,
+		Uuid:         db.Uuid.String(),
 		PasswordHash: db.PasswordHash,
 	}, nil
 }
