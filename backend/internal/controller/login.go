@@ -1,9 +1,11 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Eno0516/wo-app-ver2/backend/generated/api"
+	appError "github.com/Eno0516/wo-app-ver2/backend/internal/error"
 	"github.com/Eno0516/wo-app-ver2/backend/internal/service"
 	"github.com/gin-gonic/gin"
 )
@@ -24,6 +26,17 @@ func (l *LoginAPI) PostLogin(c *gin.Context) {
 		return
 	}
 
-	res := l.svc.LoginUserCheck(req)
+	res, err := l.svc.LoginUserCheck(req)
+	if err != nil {
+		// AppErrorかどうか
+		if appErr, ok := err.(*appError.AppError); ok {
+			c.JSON(appErr.Status, gin.H{"error": appErr.DistributeError()})
+			return
+		}
+		// 想定外のエラーは500
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
+		return
+	}
+	log.Print("res", res)
 	c.JSON(http.StatusOK, res)
 }
