@@ -1,0 +1,33 @@
+package controller
+
+import (
+	"net/http"
+
+	appError "github.com/Eno0516/wo-app-ver2/backend/internal/error"
+	"github.com/Eno0516/wo-app-ver2/backend/internal/service"
+	"github.com/gin-gonic/gin"
+	openapi_types "github.com/oapi-codegen/runtime/types"
+)
+
+type ManageFarmsAPI struct {
+	svc *service.Service
+}
+
+func NewManageFarmsAPI(svc *service.Service) *ManageFarmsAPI {
+	return &ManageFarmsAPI{svc: svc}
+}
+
+func (m *ManageFarmsAPI) GetGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
+	res, err := m.svc.GetGroupFarms(groupUuid)
+	if err != nil {
+		// AppErrorかどうか
+		if appErr, ok := err.(*appError.AppError); ok {
+			c.JSON(appErr.Status, gin.H{"error": appErr.DistributeError()})
+			return
+		}
+		// 想定外のエラーは500
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
+		return
+	}
+	c.JSON(http.StatusOK, res)
+}

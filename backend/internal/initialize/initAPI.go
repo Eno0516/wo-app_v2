@@ -27,6 +27,7 @@ func InitAPI(allowdOrigin string, svc *service.Service) *gin.Engine {
 	impl := controller.DefaultAPIImpl{
 		ManagePlantGrid: controller.NewManagePlantGridAPI(svc),
 		Login:           controller.NewLoginAPI(svc),
+		ManageFarms: controller.NewManageFarmsAPI(svc),
 	}
 	api.RegisterHandlers(apiGroup, impl)
 	return router

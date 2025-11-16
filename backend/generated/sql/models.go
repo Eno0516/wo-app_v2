@@ -10,6 +10,16 @@ import (
 	"github.com/google/uuid"
 )
 
+type GroupFarm struct {
+	GroupUuid uuid.UUID
+	FarmName  string
+	FarmUuid  uuid.UUID
+	CreatedAt sql.NullTime
+	CreatedBy uuid.UUID
+	UpdatedAt sql.NullTime
+	UpdatedBy uuid.UUID
+}
+
 type User struct {
 	UserID       string
 	GroupID      string
