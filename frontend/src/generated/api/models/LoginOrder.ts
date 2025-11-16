@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type LoginOrder = {
-    id?: string;
+    userId?: string;
+    groupId?: string;
     password?: string;
 };
 

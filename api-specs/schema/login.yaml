@@ -1,7 +1,9 @@
 LoginOrder:
   type: object
   properties:
-    id:
+    userId:
+      type: string
+    groupId:
       type: string
     password:
       type: string
@@ -9,6 +11,9 @@ LoginOrder:
 LoginUser:
   type: object
   properties:
-    uuid:
+    userUuid:
+      type: string
+      format: uuid
+    groupUuid:
       type: string
       format: uuid

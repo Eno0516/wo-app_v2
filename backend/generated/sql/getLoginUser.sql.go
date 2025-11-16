@@ -10,19 +10,33 @@ import (
 )
 
 const getLoginUser = `-- name: GetLoginUser :one
-SELECT id, uuid, username, password_hash, created_at, updated_at
+SELECT 
+  user_id, 
+  group_id, 
+  password_hash, 
+  user_uuid,
+  group_uuid,
+  created_at, 
+  updated_at
 FROM users
-WHERE username = $1
+WHERE user_id = $1
+  AND group_id = $2
 `
 
-func (q *Queries) GetLoginUser(ctx context.Context, username string) (User, error) {
-	row := q.db.QueryRowContext(ctx, getLoginUser, username)
+type GetLoginUserParams struct {
+	UserID  string
+	GroupID string
+}
+
+func (q *Queries) GetLoginUser(ctx context.Context, arg GetLoginUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, getLoginUser, arg.UserID, arg.GroupID)
 	var i User
 	err := row.Scan(
-		&i.ID,
-		&i.Uuid,
-		&i.Username,
+		&i.UserID,
+		&i.GroupID,
 		&i.PasswordHash,
+		&i.UserUuid,
+		&i.GroupUuid,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)

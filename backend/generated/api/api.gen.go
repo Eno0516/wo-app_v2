@@ -16,13 +16,15 @@ type Item struct {
 
 // LoginOrder defines model for LoginOrder.
 type LoginOrder struct {
-	Id       *string `json:"id,omitempty"`
+	GroupId  *string `json:"groupId,omitempty"`
 	Password *string `json:"password,omitempty"`
+	UserId   *string `json:"userId,omitempty"`
 }
 
 // LoginUser defines model for LoginUser.
 type LoginUser struct {
-	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
+	GroupUuid *openapi_types.UUID `json:"groupUuid,omitempty"`
+	UserUuid  *openapi_types.UUID `json:"userUuid,omitempty"`
 }
 
 // PostLoginJSONRequestBody defines body for PostLogin for application/json ContentType.

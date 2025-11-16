@@ -8,8 +8,7 @@ import (
 )
 
 func (s *Service) LoginUserCheck(item api.LoginOrder) (api.LoginUser, error) {
-	param := *item.Id
-	dbRes, err := s.dbRepo.GetLoginUser(param)
+	dbRes, err := s.dbRepo.GetLoginUser(*item.UserId, *item.GroupId)
 	if err != nil {
 		return api.LoginUser{}, err
 	}
@@ -17,12 +16,17 @@ func (s *Service) LoginUserCheck(item api.LoginOrder) (api.LoginUser, error) {
 		return api.LoginUser{}, appError.NewError(401, "Password Not Match", err)
 	}
 
-	parsed, err := uuid.Parse(dbRes.Uuid)
+	parsedUser, err := uuid.Parse(dbRes.UserUUID)
 	if err != nil {
-		return api.LoginUser{}, appError.NewError(500, "uuid parse error", err)
+		return api.LoginUser{}, appError.NewError(500, "UserUuid parse error", err)
+	}
+	parsedGroup, err := uuid.Parse(dbRes.GroupUUID)
+	if err != nil {
+		return api.LoginUser{}, appError.NewError(500, "GroupUuid parse error", err)
 	}
 	loginUser := api.LoginUser{
-		Uuid: &parsed,
+		UserUuid:  &parsedUser,
+		GroupUuid: &parsedGroup,
 	}
 	return loginUser, nil
 }

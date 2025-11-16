@@ -11,10 +11,11 @@ import (
 )
 
 type User struct {
-	ID           int32
-	Uuid         uuid.UUID
-	Username     string
+	UserID       string
+	GroupID      string
 	PasswordHash string
+	UserUuid     uuid.UUID
+	GroupUuid    uuid.UUID
 	CreatedAt    sql.NullTime
 	UpdatedAt    sql.NullTime
 }

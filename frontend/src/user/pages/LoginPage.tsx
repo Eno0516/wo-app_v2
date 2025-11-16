@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../api/client"; 
 import { type LoginOrder } from "../../generated/api/models/LoginOrder";
-
+ 
 function LoginPage() {
-    const [userName, setUserName] = useState("")
+    const [userId, setUserId] = useState("")
+    const [groupId,setGroupId] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
@@ -12,16 +13,17 @@ function LoginPage() {
         e.preventDefault()
         // ログインリクエスト
         const requestBody:LoginOrder = {
-            id: userName,
+            userId: userId,
+            groupId:groupId,
             password: password
         }
         console.log("req",requestBody)
         try {
             const res = await apiClient.postLogin(requestBody)
             console.log("res",res)
-            if (res.uuid) {
-                const uuid = res.uuid
-                navigate(`/memberPage?uuid=${uuid}`)
+            if (res.groupUuid) {
+                const groupUuid = res.groupUuid
+                navigate(`/memberPage?uuid=${groupUuid}`)
             } else {
                 throw new Error ()
             }
@@ -35,9 +37,14 @@ function LoginPage() {
         <form onSubmit={handleSubmit}>
             <h1>ログイン</h1>
             <input
-                placeholder="ユーザー名"
-                value={userName}
-                onChange={(e)=>setUserName(e.target.value)}
+                placeholder="グループID"
+                value={groupId}
+                onChange={(e)=>setGroupId(e.target.value)}
+            />
+            <input
+                placeholder="ユーザーID"
+                value={userId}
+                onChange={(e)=>setUserId(e.target.value)}
             />
             <input
                 type="password"
