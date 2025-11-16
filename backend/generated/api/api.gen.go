@@ -4,9 +4,19 @@
 package api
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+	"github.com/oapi-codegen/runtime"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
+
+// FarmInfo defines model for FarmInfo.
+type FarmInfo struct {
+	FarmName string             `json:"farmName"`
+	FarmUuid openapi_types.UUID `json:"farmUuid"`
+}
 
 // Item defines model for Item.
 type Item struct {
@@ -32,6 +42,9 @@ type PostLoginJSONRequestBody = LoginOrder
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Get Farms by GroupUUID
+	// (GET /groups/{groupUuid}/manageFarms)
+	GetGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID)
 	// Order to login
 	// (POST /login)
 	PostLogin(c *gin.Context)
@@ -48,6 +61,30 @@ type ServerInterfaceWrapper struct {
 }
 
 type MiddlewareFunc func(c *gin.Context)
+
+// GetGroupsGroupUuidManageFarms operation middleware
+func (siw *ServerInterfaceWrapper) GetGroupsGroupUuidManageFarms(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "groupUuid" -------------
+	var groupUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "groupUuid", c.Param("groupUuid"), &groupUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter groupUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetGroupsGroupUuidManageFarms(c, groupUuid)
+}
 
 // PostLogin operation middleware
 func (siw *ServerInterfaceWrapper) PostLogin(c *gin.Context) {
@@ -102,6 +139,7 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 		ErrorHandler:       errorHandler,
 	}
 
+	router.GET(options.BaseURL+"/groups/:groupUuid/manageFarms", wrapper.GetGroupsGroupUuidManageFarms)
 	router.POST(options.BaseURL+"/login", wrapper.PostLogin)
 	router.GET(options.BaseURL+"/managePlant", wrapper.GetManagePlant)
 }

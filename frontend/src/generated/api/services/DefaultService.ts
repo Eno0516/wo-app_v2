@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { FarmInfo } from '../models/FarmInfo';
 import type { Item } from '../models/Item';
 import type { LoginOrder } from '../models/LoginOrder';
 import type { LoginUser } from '../models/LoginUser';
@@ -34,6 +35,23 @@ export class DefaultService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/managePlant',
+        });
+    }
+    /**
+     * Get Farms by GroupUUID
+     * @param groupUuid
+     * @returns FarmInfo OK
+     * @throws ApiError
+     */
+    public static getGroupsManageFarms(
+        groupUuid: string,
+    ): CancelablePromise<Array<FarmInfo>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/groups/{groupUuid}/manageFarms',
+            path: {
+                'groupUuid': groupUuid,
+            },
         });
     }
 }

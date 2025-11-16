@@ -33,6 +33,25 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Item'
+  /groups/{groupUuid}/manageFarms:
+    get:
+      summary: Get Farms by GroupUUID
+      parameters:
+        - name: groupUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FarmInfo'
 components:
   schemas:
     LoginOrder:
@@ -62,3 +81,14 @@ components:
           format: int64
         title:
           type: string
+    FarmInfo:
+      type: object
+      required:
+        - farmName
+        - farmUuid
+      properties:
+        farmName:
+          type: string
+        farmUuid:
+          type: string
+          format: uuid

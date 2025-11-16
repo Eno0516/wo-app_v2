@@ -1,9 +1,14 @@
 // ログイン情報を元に登録済みの圃場情報を取得させる個人用ページ
-
+import ManageFarmArea from "../components/MemberPage/Farm/ManageFarm/ManageFarmArea";
 function MemberPage () {
-    // userIDから登録圃場一覧情報を取得
+
     return (
-        <h1>メンバーページ</h1>
+        <>
+            <h1>メンバーページ</h1>
+            <div>
+                <ManageFarmArea />
+            </div>
+        </>
     )
 }
 

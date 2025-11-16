@@ -23,7 +23,7 @@ function LoginPage() {
             console.log("res",res)
             if (res.groupUuid) {
                 const groupUuid = res.groupUuid
-                navigate(`/memberPage?uuid=${groupUuid}`)
+                navigate(`/memberPage?groupUuid=${groupUuid}`)
             } else {
                 throw new Error ()
             }

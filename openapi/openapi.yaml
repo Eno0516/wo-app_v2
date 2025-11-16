@@ -9,3 +9,5 @@ paths:
     $ref: '../api-specs/paths/login.yaml'
   /managePlant:
     $ref: '../api-specs/paths/managePlant.yaml'
+  /groups/{groupUuid}/manageFarms:
+    $ref: '../api-specs/paths/manageFarm.yaml'

@@ -1,0 +1,11 @@
+FarmInfo:
+  type: object
+  required:
+    - farmName
+    - farmUuid
+  properties:
+    farmName: 
+      type: string
+    farmUuid: 
+      type: string
+      format: uuid
