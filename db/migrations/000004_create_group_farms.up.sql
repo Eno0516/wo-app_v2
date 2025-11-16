@@ -4,7 +4,7 @@ CREATE TABLE group_farms (
   farm_name    TEXT NOT NULL,
   farm_uuid    UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at   TIMESTAMP DEFAULT NOW(),
-  created_by   UUID NOT NULL,
+  created_by   UUID,
   updated_at   TIMESTAMP DEFAULT NOW(),
-  updated_by   UUID NOT NULL
+  updated_by   UUID 
 );
