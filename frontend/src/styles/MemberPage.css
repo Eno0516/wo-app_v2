@@ -1,0 +1,12 @@
+.content-area {
+    padding: 8px;
+}
+
+.content-box {
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+.add-button {
+    width: 5%
+}

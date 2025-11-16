@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { FarmInfo } from '../models/FarmInfo';
+import type { FarmInfoDetail } from '../models/FarmInfoDetail';
 import type { Item } from '../models/Item';
 import type { LoginOrder } from '../models/LoginOrder';
 import type { LoginUser } from '../models/LoginUser';
@@ -52,6 +53,48 @@ export class DefaultService {
             path: {
                 'groupUuid': groupUuid,
             },
+        });
+    }
+    /**
+     * Register New Farm
+     * @param groupUuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static postGroupsManageFarms(
+        groupUuid: string,
+        requestBody: FarmInfoDetail,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/groups/{groupUuid}/manageFarms',
+            path: {
+                'groupUuid': groupUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Update Farm FarmInfo
+     * @param groupUuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static putGroupsManageFarms(
+        groupUuid: string,
+        requestBody: FarmInfoDetail,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/groups/{groupUuid}/manageFarms',
+            path: {
+                'groupUuid': groupUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 }

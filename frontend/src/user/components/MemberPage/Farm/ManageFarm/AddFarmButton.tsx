@@ -2,9 +2,12 @@
 
 import { useState } from "react"
 import InputPopFarmInfo from "./InputPopFarmInfo"
-import {type PopFarmInfo} from "./InputPopFarmInfo"
 
-function AddFarmButton () {
+type AddFarmButtonProps = {
+    mode: "add" | "edit"
+}
+
+function AddFarmButton ({mode}:AddFarmButtonProps) {
     const [isPopVisible,setIsPopVisible] = useState(false)
     const onClick = () => {
         setIsPopVisible(true)
@@ -12,20 +15,13 @@ function AddFarmButton () {
     const onClickPopClose = () =>{
         setIsPopVisible(false)
     }
-    const onSaveFarm = (result:PopFarmInfo) => {
-        // バックエンドに送信
-        // モーダルを非表示
-        setIsPopVisible(false)
-        // 画面をリロードして登録畑を更新
-
-    }
     return (
         <>
         <button onClick={onClick}>畑を追加</button>
         {isPopVisible && 
         <InputPopFarmInfo
+            mode={mode}
             onClose={onClickPopClose}
-            onSave={onSaveFarm}
         />
         }
         </>

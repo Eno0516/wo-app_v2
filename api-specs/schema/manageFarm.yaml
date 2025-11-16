@@ -9,3 +9,29 @@ FarmInfo:
     farmUuid: 
       type: string
       format: uuid
+FarmInfoDetail:
+  type: object
+  required:
+    - farmName
+    - farmYear
+    - farmSeasons
+    - farmLength
+    - farmWidth
+  properties:
+    farmName:
+      type: string
+    farmYear: 
+      type: number
+    farmSeasons:
+      type: array
+      items:
+        type: number
+    farmLength: 
+      type: string
+    farmWidth:
+      type: string
+    furrowNumber:
+      type: number
+    furrowWidth:
+      type: string
+

@@ -52,6 +52,42 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FarmInfo'
+    post:
+      summary: Register New Farm
+      parameters:
+        - name: groupUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FarmInfoDetail'
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update Farm FarmInfo
+      parameters:
+        - name: groupUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FarmInfoDetail'
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     LoginOrder:
@@ -92,3 +128,28 @@ components:
         farmUuid:
           type: string
           format: uuid
+    FarmInfoDetail:
+      type: object
+      required:
+        - farmName
+        - farmYear
+        - farmSeasons
+        - farmLength
+        - farmWidth
+      properties:
+        farmName:
+          type: string
+        farmYear:
+          type: number
+        farmSeasons:
+          type: array
+          items:
+            type: number
+        farmLength:
+          type: string
+        farmWidth:
+          type: string
+        furrowNumber:
+          type: number
+        furrowWidth:
+          type: string

@@ -8,6 +8,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { FarmInfo } from './models/FarmInfo';
+export type { FarmInfoDetail } from './models/FarmInfoDetail';
 export type { Item } from './models/Item';
 export type { LoginOrder } from './models/LoginOrder';
 export type { LoginUser } from './models/LoginUser';

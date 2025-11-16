@@ -16,3 +16,39 @@ get:
             type: array
             items:
               $ref: '../schema/manageFarm.yaml#/FarmInfo'
+post:
+  summary: Register New Farm
+  parameters:
+    - name: groupUuid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schema/manageFarm.yaml#/FarmInfoDetail'
+  responses:
+    '200':
+      description: OK
+put:
+  summary: Update Farm FarmInfo
+  parameters:
+    - name: groupUuid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schema/manageFarm.yaml#/FarmInfoDetail'
+  responses:
+    '200':
+      description: OK
