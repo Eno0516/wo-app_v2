@@ -140,16 +140,16 @@ components:
         farmName:
           type: string
         farmYear:
-          type: number
+          type: integer
         farmSeasons:
           type: array
           items:
-            type: number
+            type: integer
         farmLength:
           type: string
         farmWidth:
           type: string
         furrowNumber:
-          type: number
+          type: integer
         furrowWidth:
           type: string

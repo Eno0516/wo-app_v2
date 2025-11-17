@@ -6,6 +6,7 @@ package sql
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -15,9 +16,24 @@ type GroupFarm struct {
 	FarmName  string
 	FarmUuid  uuid.UUID
 	CreatedAt sql.NullTime
-	CreatedBy uuid.UUID
+	CreatedBy uuid.NullUUID
 	UpdatedAt sql.NullTime
-	UpdatedBy uuid.UUID
+	UpdatedBy uuid.NullUUID
+}
+
+type ManageFarmsInfo struct {
+	FarmUuid       uuid.UUID
+	FarmManageUuid uuid.UUID
+	FarmLength     sql.NullString
+	FarmWidth      sql.NullString
+	FurrowNumber   sql.NullInt32
+	FurrowWidth    sql.NullString
+	FarmSeason     []int32
+	FarmYear       sql.NullInt32
+	CreatedAt      time.Time
+	CreatedBy      uuid.NullUUID
+	UpdatedAt      sql.NullTime
+	UpdatedBy      uuid.NullUUID
 }
 
 type User struct {

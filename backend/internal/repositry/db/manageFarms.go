@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/Eno0516/wo-app-ver2/backend/generated/sql"
 	appError "github.com/Eno0516/wo-app-ver2/backend/internal/error"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
@@ -29,4 +30,26 @@ func (r *DBRepositry) GetFarms(groupUuid openapi_types.UUID) ([]FarmInfoRes, err
 		}
 	}
 	return farmInfos, nil
+}
+
+func (r *DBRepositry) RegisterFarms(groupUuid openapi_types.UUID, farmName string) (openapi_types.UUID, error) {
+	ctx := context.Background()
+	parms := sql.RegisterGroupFarmParams{
+		GroupUuid: groupUuid,
+		FarmName:  farmName,
+	}
+	dbRes, err := r.q.RegisterGroupFarm(ctx, parms)
+	if err != nil {
+		return openapi_types.UUID{}, err
+	}
+	return dbRes, nil
+}
+
+func (r *DBRepositry) RegisterFarmInfo(params sql.CreateManageFarmInfoParams) error {
+	ctx := context.Background()
+	err := r.q.CreateManageFarmInfo(ctx, params)
+	if err != nil {
+		return err
+	}
+	return nil
 }

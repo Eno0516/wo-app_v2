@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/Eno0516/wo-app-ver2/backend/generated/api"
 	appError "github.com/Eno0516/wo-app-ver2/backend/internal/error"
 	"github.com/Eno0516/wo-app-ver2/backend/internal/service"
 	"github.com/gin-gonic/gin"
@@ -30,4 +31,30 @@ func (m *ManageFarmsAPI) GetGroupsGroupUuidManageFarms(c *gin.Context, groupUuid
 		return
 	}
 	c.JSON(http.StatusOK, res)
+}
+
+func (m *ManageFarmsAPI) PostGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
+	var req api.FarmInfoDetail
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	err := m.svc.RegisterGroupFarms(groupUuid, req)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "register failed"})
+		return
+	}
+}
+
+func (m *ManageFarmsAPI) PutGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
+	var req api.FarmInfoDetail
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	err := m.svc.UpdateGroupFarms(groupUuid, req)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "update failed"})
+		return
+	}
 }

@@ -18,6 +18,17 @@ type FarmInfo struct {
 	FarmUuid openapi_types.UUID `json:"farmUuid"`
 }
 
+// FarmInfoDetail defines model for FarmInfoDetail.
+type FarmInfoDetail struct {
+	FarmLength   string  `json:"farmLength"`
+	FarmName     string  `json:"farmName"`
+	FarmSeasons  []int   `json:"farmSeasons"`
+	FarmWidth    string  `json:"farmWidth"`
+	FarmYear     int     `json:"farmYear"`
+	FurrowNumber *int    `json:"furrowNumber,omitempty"`
+	FurrowWidth  *string `json:"furrowWidth,omitempty"`
+}
+
 // Item defines model for Item.
 type Item struct {
 	Id    *int64  `json:"id,omitempty"`
@@ -37,6 +48,12 @@ type LoginUser struct {
 	UserUuid  *openapi_types.UUID `json:"userUuid,omitempty"`
 }
 
+// PostGroupsGroupUuidManageFarmsJSONRequestBody defines body for PostGroupsGroupUuidManageFarms for application/json ContentType.
+type PostGroupsGroupUuidManageFarmsJSONRequestBody = FarmInfoDetail
+
+// PutGroupsGroupUuidManageFarmsJSONRequestBody defines body for PutGroupsGroupUuidManageFarms for application/json ContentType.
+type PutGroupsGroupUuidManageFarmsJSONRequestBody = FarmInfoDetail
+
 // PostLoginJSONRequestBody defines body for PostLogin for application/json ContentType.
 type PostLoginJSONRequestBody = LoginOrder
 
@@ -45,6 +62,12 @@ type ServerInterface interface {
 	// Get Farms by GroupUUID
 	// (GET /groups/{groupUuid}/manageFarms)
 	GetGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID)
+	// Register New Farm
+	// (POST /groups/{groupUuid}/manageFarms)
+	PostGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID)
+	// Update Farm FarmInfo
+	// (PUT /groups/{groupUuid}/manageFarms)
+	PutGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID)
 	// Order to login
 	// (POST /login)
 	PostLogin(c *gin.Context)
@@ -84,6 +107,54 @@ func (siw *ServerInterfaceWrapper) GetGroupsGroupUuidManageFarms(c *gin.Context)
 	}
 
 	siw.Handler.GetGroupsGroupUuidManageFarms(c, groupUuid)
+}
+
+// PostGroupsGroupUuidManageFarms operation middleware
+func (siw *ServerInterfaceWrapper) PostGroupsGroupUuidManageFarms(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "groupUuid" -------------
+	var groupUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "groupUuid", c.Param("groupUuid"), &groupUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter groupUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.PostGroupsGroupUuidManageFarms(c, groupUuid)
+}
+
+// PutGroupsGroupUuidManageFarms operation middleware
+func (siw *ServerInterfaceWrapper) PutGroupsGroupUuidManageFarms(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "groupUuid" -------------
+	var groupUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "groupUuid", c.Param("groupUuid"), &groupUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter groupUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.PutGroupsGroupUuidManageFarms(c, groupUuid)
 }
 
 // PostLogin operation middleware
@@ -140,6 +211,8 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	}
 
 	router.GET(options.BaseURL+"/groups/:groupUuid/manageFarms", wrapper.GetGroupsGroupUuidManageFarms)
+	router.POST(options.BaseURL+"/groups/:groupUuid/manageFarms", wrapper.PostGroupsGroupUuidManageFarms)
+	router.PUT(options.BaseURL+"/groups/:groupUuid/manageFarms", wrapper.PutGroupsGroupUuidManageFarms)
 	router.POST(options.BaseURL+"/login", wrapper.PostLogin)
 	router.GET(options.BaseURL+"/managePlant", wrapper.GetManagePlant)
 }

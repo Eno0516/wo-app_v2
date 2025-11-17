@@ -1,6 +1,6 @@
 CREATE TABLE manage_farms_info (
-    farm_uuid UUID PRIMARY KEY,
-    farm_manage_uuid UUID NOT NULL,
+    farm_uuid UUID NOT NULL,
+    farm_manage_uuid UUID PRIMARY KEY DEFAULT uuid_generate_v4() ,
     farm_length TEXT,
     farm_width TEXT,
     furrow_number INTEGER,
