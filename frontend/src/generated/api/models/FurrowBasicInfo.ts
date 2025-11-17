@@ -4,6 +4,5 @@
 /* eslint-disable */
 export type FurrowBasicInfo = {
     furrowNumber: number;
-    furrowWidth: number;
 };
 

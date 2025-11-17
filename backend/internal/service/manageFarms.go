@@ -86,6 +86,19 @@ func (s *Service) GetManageFarmsBasicInfo(farmUuid openapi_types.UUID) (res []ap
 	return response, nil
 }
 
+func (s *Service) GetManageFarmFurrowInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) (api.FurrowBasicInfo, error) {
+	// DB層呼び出し
+	// 畝数を取得
+	res, err := s.dbRepo.GetFurrows(farmManageUuid)
+	if err != nil {
+		return api.FurrowBasicInfo{}, err
+	}
+	response := api.FurrowBasicInfo{
+		FurrowNumber: res,
+	}
+	return response, nil
+}
+
 // ヘルパー関数
 func toNullString(s string) default_sql.NullString {
 	if s == "" {

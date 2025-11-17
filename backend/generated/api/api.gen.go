@@ -39,8 +39,7 @@ type FarmPageBasicInfo struct {
 
 // FurrowBasicInfo defines model for FurrowBasicInfo.
 type FurrowBasicInfo struct {
-	FurrowNumber int `json:"furrowNumber"`
-	FurrowWidth  int `json:"furrowWidth"`
+	FurrowNumber int32 `json:"furrowNumber"`
 }
 
 // Item defines model for Item.

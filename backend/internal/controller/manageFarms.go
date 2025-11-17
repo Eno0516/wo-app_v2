@@ -69,4 +69,10 @@ func (m *ManageFarmsAPI) GetManageFarmsFarmUuid(c *gin.Context, farmUuid openapi
 }
 
 func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
+	res, err := m.svc.GetManageFarmFurrowInfo(farmUuid, farmManageUuid)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "get farm furrow failed"})
+		return
+	}
+	c.JSON(http.StatusOK, res)
 }

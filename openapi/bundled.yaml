@@ -220,9 +220,7 @@ components:
       type: object
       required:
         - furrowNumber
-        - furrowWidth
       properties:
         furrowNumber:
           type: integer
-        furrowWidth:
-          type: integer
+          format: int32

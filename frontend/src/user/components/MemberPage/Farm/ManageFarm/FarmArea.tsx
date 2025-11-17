@@ -12,7 +12,6 @@ type FarmAreaProps = {
 }
 type FurrowBasicInfo = {
     furrowNumber: number,
-    furrowWidth: number,
 }
 function FarmArea (props:FarmAreaProps) {
     const [furrowInfo,setFurrowInfo] = useState<FurrowBasicInfo>()
@@ -32,7 +31,6 @@ function FarmArea (props:FarmAreaProps) {
             {furrowInfo && [...Array(furrowInfo.furrowNumber)].map((_,index)=>(
                 <CreateFurrow
                 furrowId={index}
-                furrowWidth={furrowInfo.furrowWidth}
                 farmManageUuid={props.farmManageUuid}
                  />
             ))}          
