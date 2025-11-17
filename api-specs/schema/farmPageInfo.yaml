@@ -1,0 +1,19 @@
+FarmPageBasicInfo:
+  type: object
+  required:
+    - farmName
+    - farmYear
+    - farmSeasons
+    - farmManageUuid
+  properties:
+    farmName: 
+      type: string
+    farmYear:
+      type: integer
+    farmSeasons:
+      type: array
+      items:
+        type: integer
+    farmManageUuid:
+      type: string
+      format: uuid

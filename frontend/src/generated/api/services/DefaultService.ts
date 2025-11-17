@@ -4,6 +4,8 @@
 /* eslint-disable */
 import type { FarmInfo } from '../models/FarmInfo';
 import type { FarmInfoDetail } from '../models/FarmInfoDetail';
+import type { FarmPageBasicInfo } from '../models/FarmPageBasicInfo';
+import type { FurrowBasicInfo } from '../models/FurrowBasicInfo';
 import type { Item } from '../models/Item';
 import type { LoginOrder } from '../models/LoginOrder';
 import type { LoginUser } from '../models/LoginUser';
@@ -95,6 +97,43 @@ export class DefaultService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+    /**
+     * Get Farm Page Info
+     * @param farmUuid
+     * @returns FarmPageBasicInfo OK
+     * @throws ApiError
+     */
+    public static getManageFarms(
+        farmUuid: string,
+    ): CancelablePromise<Array<FarmPageBasicInfo>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/manageFarms/{farmUuid}',
+            path: {
+                'farmUuid': farmUuid,
+            },
+        });
+    }
+    /**
+     * Get furrow Info
+     * @param farmUuid
+     * @param farmManageUuid
+     * @returns FurrowBasicInfo Farm page info
+     * @throws ApiError
+     */
+    public static getManageFarms1(
+        farmUuid: string,
+        farmManageUuid: string,
+    ): CancelablePromise<FurrowBasicInfo> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+            },
         });
     }
 }

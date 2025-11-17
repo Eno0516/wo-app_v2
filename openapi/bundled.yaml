@@ -88,6 +88,48 @@ paths:
       responses:
         '200':
           description: OK
+  /manageFarms/{farmUuid}:
+    get:
+      summary: Get Farm Page Info
+      parameters:
+        - name: farmUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FarmPageBasicInfo'
+  /manageFarms/{farmUuid}/{farmManageUuid}:
+    get:
+      summary: Get furrow Info
+      parameters:
+        - name: farmUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: farmManageUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Farm page info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FurrowBasicInfo'
 components:
   schemas:
     LoginOrder:
@@ -153,3 +195,32 @@ components:
           type: integer
         furrowWidth:
           type: string
+    FarmPageBasicInfo:
+      type: object
+      required:
+        - farmName
+        - farmYear
+        - farmSeasons
+        - farmManageUuid
+      properties:
+        farmName:
+          type: string
+        farmYear:
+          type: integer
+        farmSeasons:
+          type: array
+          items:
+            type: integer
+        farmManageUuid:
+          type: string
+          format: uuid
+    FurrowBasicInfo:
+      type: object
+      required:
+        - furrowNumber
+        - furrowWidth
+      properties:
+        furrowNumber:
+          type: integer
+        furrowWidth:
+          type: integer

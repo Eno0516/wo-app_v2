@@ -11,3 +11,7 @@ paths:
     $ref: '../api-specs/paths/managePlant.yaml'
   /groups/{groupUuid}/manageFarms:
     $ref: '../api-specs/paths/manageFarm.yaml'
+  /manageFarms/{farmUuid}:
+    $ref: '../api-specs/paths/farmPageInfo.yaml'
+  /manageFarms/{farmUuid}/{farmManageUuid}:
+    $ref: '../api-specs/paths/furrowBasicInfo.yaml'

@@ -9,6 +9,8 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { FarmInfo } from './models/FarmInfo';
 export type { FarmInfoDetail } from './models/FarmInfoDetail';
+export type { FarmPageBasicInfo } from './models/FarmPageBasicInfo';
+export type { FurrowBasicInfo } from './models/FurrowBasicInfo';
 export type { Item } from './models/Item';
 export type { LoginOrder } from './models/LoginOrder';
 export type { LoginUser } from './models/LoginUser';

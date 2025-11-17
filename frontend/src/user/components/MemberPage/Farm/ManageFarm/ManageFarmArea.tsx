@@ -56,7 +56,7 @@ function ManageFarmArea () {
                     <FarmLinkButton
                     title={farm.farmName}
                     uuid={farm.farmUuid}
-                    onClickLink={navigateFarmPage}
+                    onClickLink={()=>navigateFarmPage(farm.farmUuid)}
                      />
                 ))}
             </div>
