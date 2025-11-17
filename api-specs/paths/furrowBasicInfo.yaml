@@ -1,18 +1,18 @@
 get:
   summary: Get furrow Info
   parameters:
-        - name: farmUuid
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: farmManageUuid
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
+    - name: farmUuid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: farmManageUuid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   responses:
     '200':
       description: Farm page info

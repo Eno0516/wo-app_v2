@@ -62,6 +62,30 @@ func (s *Service) UpdateGroupFarms(groupUuid openapi_types.UUID, req api.FarmInf
 	return nil
 }
 
+func (s *Service) GetManageFarmsBasicInfo(farmUuid openapi_types.UUID) (res []api.FarmPageBasicInfo, err error) {
+	// DB層を呼び出し
+	// farmNameを取得
+	farmName, err := s.dbRepo.GetFarmName(farmUuid)
+	if err != nil {
+		return []api.FarmPageBasicInfo{}, err
+	}
+	// それ以外を取得
+	manageFarmsBasicInfo, err := s.dbRepo.GetManageFarmsBasicInfo(farmUuid)
+	if err != nil {
+		return []api.FarmPageBasicInfo{}, err
+	}
+	var response []api.FarmPageBasicInfo
+	for _, m := range manageFarmsBasicInfo {
+		response = append(response, api.FarmPageBasicInfo{
+			FarmManageUuid: m.FarmManageUuid,
+			FarmName:       farmName,
+			FarmSeasons:    m.FarmSeason,
+			FarmYear:       m.FarmYear.Int32,
+		})
+	}
+	return response, nil
+}
+
 // ヘルパー関数
 func toNullString(s string) default_sql.NullString {
 	if s == "" {

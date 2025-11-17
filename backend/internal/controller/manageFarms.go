@@ -58,3 +58,15 @@ func (m *ManageFarmsAPI) PutGroupsGroupUuidManageFarms(c *gin.Context, groupUuid
 		return
 	}
 }
+
+func (m *ManageFarmsAPI) GetManageFarmsFarmUuid(c *gin.Context, farmUuid openapi_types.UUID) {
+	res, err := m.svc.GetManageFarmsBasicInfo(farmUuid)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "get farms failed"})
+		return
+	}
+	c.JSON(http.StatusOK, res)
+}
+
+func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
+}

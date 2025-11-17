@@ -207,10 +207,12 @@ components:
           type: string
         farmYear:
           type: integer
+          format: int32
         farmSeasons:
           type: array
           items:
             type: integer
+            format: int32
         farmManageUuid:
           type: string
           format: uuid

@@ -35,6 +35,14 @@ type ManageFarmsInfo struct {
 	UpdatedBy      uuid.NullUUID
 }
 
+type ManageFurrow struct {
+	FarmManageUuid  uuid.UUID
+	FurrowID        int32
+	Rows            int32
+	MinPlantSpacing int32
+	FurrowWidth     int32
+}
+
 type User struct {
 	UserID       string
 	GroupID      string

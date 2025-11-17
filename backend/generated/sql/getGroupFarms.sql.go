@@ -7,9 +7,24 @@ package sql
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
+
+const getFarmName = `-- name: GetFarmName :one
+SELECT farm_name
+FROM group_farms
+WHERE farm_uuid = $1
+`
+
+func (q *Queries) GetFarmName(ctx context.Context, farmUuid uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getFarmName, farmUuid)
+	var farm_name string
+	err := row.Scan(&farm_name)
+	return farm_name, err
+}
 
 const getGroupFarms = `-- name: GetGroupFarms :many
 SELECT
@@ -36,6 +51,44 @@ func (q *Queries) GetGroupFarms(ctx context.Context, groupUuid uuid.UUID) ([]Get
 	for rows.Next() {
 		var i GetGroupFarmsRow
 		if err := rows.Scan(&i.FarmName, &i.FarmUuid); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getManageFarmsBasicInfo = `-- name: GetManageFarmsBasicInfo :many
+SELECT
+  farm_manage_uuid,
+  farm_year,
+  farm_season
+FROM manage_farms_info
+WHERE farm_uuid = $1
+`
+
+type GetManageFarmsBasicInfoRow struct {
+	FarmManageUuid uuid.UUID
+	FarmYear       sql.NullInt32
+	FarmSeason     []int32
+}
+
+func (q *Queries) GetManageFarmsBasicInfo(ctx context.Context, farmUuid uuid.UUID) ([]GetManageFarmsBasicInfoRow, error) {
+	rows, err := q.db.QueryContext(ctx, getManageFarmsBasicInfo, farmUuid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetManageFarmsBasicInfoRow
+	for rows.Next() {
+		var i GetManageFarmsBasicInfoRow
+		if err := rows.Scan(&i.FarmManageUuid, &i.FarmYear, pq.Array(&i.FarmSeason)); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

@@ -53,3 +53,21 @@ func (r *DBRepositry) RegisterFarmInfo(params sql.CreateManageFarmInfoParams) er
 	}
 	return nil
 }
+
+func (r *DBRepositry) GetFarmName(farmUuid openapi_types.UUID) (farmName string, err error) {
+	ctx := context.Background()
+	dbRes, err := r.q.GetFarmName(ctx, farmUuid)
+	if err != nil {
+		return "", err
+	}
+	return dbRes, nil
+}
+
+func (r *DBRepositry) GetManageFarmsBasicInfo(farmUuid openapi_types.UUID) (res []sql.GetManageFarmsBasicInfoRow, err error) {
+	ctx := context.Background()
+	dbRes, err := r.q.GetManageFarmsBasicInfo(ctx, farmUuid)
+	if err != nil {
+		return []sql.GetManageFarmsBasicInfoRow{}, err
+	}
+	return dbRes, nil
+}
