@@ -19,7 +19,6 @@ INSERT INTO manage_farms_info (
     farm_length,
     farm_width,
     furrow_number,
-    furrow_width,
     farm_season,
     farm_year,
     created_by,
@@ -31,12 +30,11 @@ VALUES (
     $2,  -- farm_length
     $3,  -- farm_width
     $4,  -- furrow_number
-    $5,  -- furrow_width
-    $6,  -- farm_season
-    $7,  -- farm_year
-    $8,  -- created_by (NULL許容)
-    $9,  -- updated_at (NULL許容)
-    $10  -- updated_by (NULL許容)
+    $5,  -- farm_season
+    $6,  -- farm_year
+    $7,  -- created_by (NULL許容)
+    $8,  -- updated_at (NULL許容)
+    $9  -- updated_by (NULL許容)
 )
 `
 
@@ -45,7 +43,6 @@ type CreateManageFarmInfoParams struct {
 	FarmLength   sql.NullString
 	FarmWidth    sql.NullString
 	FurrowNumber sql.NullInt32
-	FurrowWidth  sql.NullString
 	FarmSeason   []int32
 	FarmYear     sql.NullInt32
 	CreatedBy    uuid.NullUUID
@@ -59,7 +56,6 @@ func (q *Queries) CreateManageFarmInfo(ctx context.Context, arg CreateManageFarm
 		arg.FarmLength,
 		arg.FarmWidth,
 		arg.FurrowNumber,
-		arg.FurrowWidth,
 		pq.Array(arg.FarmSeason),
 		arg.FarmYear,
 		arg.CreatedBy,

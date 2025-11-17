@@ -10,7 +10,6 @@ INSERT INTO manage_farms_info (
     farm_length,
     farm_width,
     furrow_number,
-    furrow_width,
     farm_season,
     farm_year,
     created_by,
@@ -22,10 +21,9 @@ VALUES (
     $2,  -- farm_length
     $3,  -- farm_width
     $4,  -- furrow_number
-    $5,  -- furrow_width
-    $6,  -- farm_season
-    $7,  -- farm_year
-    $8,  -- created_by (NULL許容)
-    $9,  -- updated_at (NULL許容)
-    $10  -- updated_by (NULL許容)
+    $5,  -- farm_season
+    $6,  -- farm_year
+    $7,  -- created_by (NULL許容)
+    $8,  -- updated_at (NULL許容)
+    $9  -- updated_by (NULL許容)
 );

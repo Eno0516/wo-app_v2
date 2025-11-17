@@ -27,7 +27,6 @@ type ManageFarmsInfo struct {
 	FarmLength     sql.NullString
 	FarmWidth      sql.NullString
 	FurrowNumber   sql.NullInt32
-	FurrowWidth    sql.NullString
 	FarmSeason     []int32
 	FarmYear       sql.NullInt32
 	CreatedAt      time.Time

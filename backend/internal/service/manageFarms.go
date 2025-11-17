@@ -41,7 +41,6 @@ func (s *Service) RegisterGroupFarms(groupUuid openapi_types.UUID, req api.FarmI
 		FarmLength:   toNullString(req.FarmLength),
 		FarmWidth:    toNullString(req.FarmWidth),
 		FurrowNumber: toNullInt32(req.FurrowNumber),
-		FurrowWidth:  toNullString(req.FarmWidth),
 		FarmSeason:   toInt32Slice(req.FarmSeasons),
 		FarmYear: default_sql.NullInt32{
 			Int32: int32(req.FarmYear),

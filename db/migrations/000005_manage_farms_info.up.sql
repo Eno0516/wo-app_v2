@@ -4,7 +4,6 @@ CREATE TABLE manage_farms_info (
     farm_length TEXT,
     farm_width TEXT,
     furrow_number INTEGER,
-    furrow_width TEXT,
     farm_season INTEGER[],         -- 数値の配列
     farm_year INTEGER,
     created_at TIMESTAMP NOT NULL DEFAULT now(),

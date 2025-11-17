@@ -125,13 +125,6 @@ function InputPopFarmInfo (props:ClickPopInputBoxProps) {
                     setFarmInfo={setFarmInfo}
                     placeHolder="畝数"
                     />
-                                        <InputFarmInfo
-                    field={POP_FARM_INFO.furrowWidth}
-                    farmInfo={farmInfo}
-                    setFarmInfo={setFarmInfo}
-                    placeHolder="畝幅"
-                    />
-                 
 
                     <button onClick={()=> handleSubmit()}>OK</button>
                     <button onClick={handleClose}>Cancel</button>
