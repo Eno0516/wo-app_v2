@@ -31,6 +31,7 @@ function FarmArea (props:FarmAreaProps) {
             {furrowInfo && [...Array(furrowInfo.furrowNumber)].map((_,index)=>(
                 <CreateFurrow
                 furrowId={index}
+                farmUuid={props.farmUuid}
                 farmManageUuid={props.farmManageUuid}
                  />
             ))}          

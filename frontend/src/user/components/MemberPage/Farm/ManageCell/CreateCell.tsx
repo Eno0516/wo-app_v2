@@ -1,45 +1,44 @@
-import type {Dispatch, SetStateAction} from "react"
+import {useState} from 'react'
+import InputPopCellData from './InputPopCellData/InputPopCellData'
 
-interface GridProps {
-    rows: number;
-    columns: number;
-    names?:Record<string,string>;
-    setName?:Dispatch<SetStateAction<Record<string,string>>>
-    onClick?:(id:string)=>void
+export type CellInfo = {
+    row: number
+    column: number
+    item: string
+    variety: string
+    datePlanted: string
+    growthStage: number
+    status: number
+    poorGrowthReason: number
+    dateHarvestPlanted: string
+    memo: string
 }
 
 //セルを作成・描画するのみ。そのセルに今後の処理を踏まえてクリックイベントを付随させておく
-function CreateCell ({rows, columns, onClick,names }:GridProps) {
-    //行と列のインデックス配列を生成
-    const rowIndices = Array.from({length: rows}, (_, i) => i);
-    const colIndices = Array.from({length: columns}, (_,i) => i);
+function CreateCell (props:CellInfo) {
+    // ポップの表示管理
+    const [isVisiblePop,setIsVisiblePop] = useState(false)
+
+    const handleClick = () => {
+        setIsVisiblePop(true)
+    }
+    const handleClose = () => {
+        setIsVisiblePop(false)
+    }
 
     return (
-        <div
-        className="grid-container"
-        style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${columns},1fr)`,
-            gap: '8px',
-        }}
-        >
-            {rowIndices.map(row =>
-                colIndices.map(col => {
-                    const id = `${row}-${col}`;
-                    const name = names?.[id]
-                    return (
-                        <div
-                            key={id}
-                            id={id}
-                            className="grid-item"
-                            onClick={()=>onClick?.(id)}
-                        >
-                            {name}
-                        </div>
-                    )
-                })
-            )}
-        </div>
+        <>
+      <div onClick={()=>handleClick()}>
+
+      </div>
+      {isVisiblePop && 
+        <InputPopCellData 
+        initial={props}
+        initialPoorReason={[props.poorGrowthReason]}
+        onClose={handleClose}
+        />
+      }
+      </>
     )
 }
 

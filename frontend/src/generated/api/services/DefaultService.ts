@@ -6,6 +6,7 @@ import type { FarmInfo } from '../models/FarmInfo';
 import type { FarmInfoDetail } from '../models/FarmInfoDetail';
 import type { FarmPageBasicInfo } from '../models/FarmPageBasicInfo';
 import type { FurrowBasicInfo } from '../models/FurrowBasicInfo';
+import type { FurrowCellInfo } from '../models/FurrowCellInfo';
 import type { Item } from '../models/Item';
 import type { LoginOrder } from '../models/LoginOrder';
 import type { LoginUser } from '../models/LoginUser';
@@ -133,6 +134,29 @@ export class DefaultService {
             path: {
                 'farmUuid': farmUuid,
                 'farmManageUuid': farmManageUuid,
+            },
+        });
+    }
+    /**
+     * Get Furrow Cell Info
+     * @param farmUuid
+     * @param farmManageUuid
+     * @param rowId
+     * @returns FurrowCellInfo Furrow Cell Info
+     * @throws ApiError
+     */
+    public static getManageFarms2(
+        farmUuid: string,
+        farmManageUuid: string,
+        rowId: number,
+    ): CancelablePromise<FurrowCellInfo> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}/{rowId}',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+                'rowId': rowId,
             },
         });
     }

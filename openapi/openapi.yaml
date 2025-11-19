@@ -15,3 +15,5 @@ paths:
     $ref: '../api-specs/paths/farmPageInfo.yaml'
   /manageFarms/{farmUuid}/{farmManageUuid}:
     $ref: '../api-specs/paths/furrowBasicInfo.yaml'
+  /manageFarms/{farmUuid}/{farmManageUuid}/{rowId}:
+    $ref: '../api-specs/paths/furrowCellInfo.yaml'

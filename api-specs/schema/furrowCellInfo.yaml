@@ -1,0 +1,68 @@
+FurrowCellInfo:
+  type: object
+  required:
+    - furrowWidth
+    - furrowLength
+    - minPlantSpacing
+    - rows
+    - CellInfoArray
+  properties:
+    furrowWidth:
+      type: integer
+      format: int32
+    furrowLength:
+      type: integer
+      format: int32 
+    minPlantSpacing:
+      type: integer
+      format: int32
+    rows:
+      type: integer
+      format: int32
+    CellInfoArray:
+      type: array
+      items:
+        $ref: '#/CellInfo'
+CellInfo:
+  type: object
+  required:
+    - cellRow
+    - cellColumn
+    - cropItem
+    - variety
+    - datePlanted
+    - growthStage
+    - status
+    - poorGrowthReason
+    - dateHarvestPlanted
+    - memo
+  properties:
+    cellRow:
+      type: integer
+      format: int32
+    cellColumn:
+      type: integer
+      format: int32
+    cropItem:
+      type: string
+    variety:
+      type: string
+    datePlanted:
+      type: string
+    growthStage:
+      type: integer
+      format: int32
+    status: 
+      type: integer
+      format: int32
+    poorGrowthReason:
+      type: integer
+      format: int32
+    dateHarvestPlanted:
+      type: string
+    memo:
+      type: string
+    
+    
+
+    
