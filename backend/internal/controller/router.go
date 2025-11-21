@@ -37,3 +37,6 @@ func (impl DefaultAPIImpl) GetManageFarmsFarmUuid(c *gin.Context, farmUuid opena
 func (impl DefaultAPIImpl) GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
 	impl.ManageFarms.GetManageFarmsFarmUuidFarmManageUuid(c, farmManageUuid, farmManageUuid)
 }
+func (impl DefaultAPIImpl) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+	impl.ManageFarms.GetManageFarmsFarmUuidFarmManageUuidRowId(c, farmManageUuid, farmManageUuid, rowId)
+}

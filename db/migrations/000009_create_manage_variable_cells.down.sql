@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS manage_variable_cells;

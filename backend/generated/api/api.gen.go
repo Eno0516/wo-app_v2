@@ -12,6 +12,20 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// CellInfo defines model for CellInfo.
+type CellInfo struct {
+	CellColumn         int32  `json:"cellColumn"`
+	CellRow            int32  `json:"cellRow"`
+	CropItem           string `json:"cropItem"`
+	DateHarvestPlanted string `json:"dateHarvestPlanted"`
+	DatePlanted        string `json:"datePlanted"`
+	GrowthStage        int32  `json:"growthStage"`
+	Memo               string `json:"memo"`
+	PoorGrowthReason   int32  `json:"poorGrowthReason"`
+	Status             int32  `json:"status"`
+	Variety            string `json:"variety"`
+}
+
 // FarmInfo defines model for FarmInfo.
 type FarmInfo struct {
 	FarmName string             `json:"farmName"`
@@ -40,6 +54,15 @@ type FarmPageBasicInfo struct {
 // FurrowBasicInfo defines model for FurrowBasicInfo.
 type FurrowBasicInfo struct {
 	FurrowNumber int32 `json:"furrowNumber"`
+}
+
+// FurrowCellInfo defines model for FurrowCellInfo.
+type FurrowCellInfo struct {
+	CellInfoArray   []CellInfo `json:"CellInfoArray"`
+	FurrowLength    int32      `json:"furrowLength"`
+	FurrowWidth     int32      `json:"furrowWidth"`
+	MinPlantSpacing int32      `json:"minPlantSpacing"`
+	Rows            int32      `json:"rows"`
 }
 
 // Item defines model for Item.
@@ -90,6 +113,9 @@ type ServerInterface interface {
 	// Get furrow Info
 	// (GET /manageFarms/{farmUuid}/{farmManageUuid})
 	GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID)
+	// Get Furrow Cell Info
+	// (GET /manageFarms/{farmUuid}/{farmManageUuid}/{rowId})
+	GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32)
 	// Get all users
 	// (GET /managePlant)
 	GetManagePlant(c *gin.Context)
@@ -246,6 +272,48 @@ func (siw *ServerInterfaceWrapper) GetManageFarmsFarmUuidFarmManageUuid(c *gin.C
 	siw.Handler.GetManageFarmsFarmUuidFarmManageUuid(c, farmUuid, farmManageUuid)
 }
 
+// GetManageFarmsFarmUuidFarmManageUuidRowId operation middleware
+func (siw *ServerInterfaceWrapper) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "farmUuid" -------------
+	var farmUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "farmUuid", c.Param("farmUuid"), &farmUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter farmUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Path parameter "farmManageUuid" -------------
+	var farmManageUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "farmManageUuid", c.Param("farmManageUuid"), &farmManageUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter farmManageUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Path parameter "rowId" -------------
+	var rowId int32
+
+	err = runtime.BindStyledParameterWithOptions("simple", "rowId", c.Param("rowId"), &rowId, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter rowId: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
+}
+
 // GetManagePlant operation middleware
 func (siw *ServerInterfaceWrapper) GetManagePlant(c *gin.Context) {
 
@@ -292,5 +360,6 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.POST(options.BaseURL+"/login", wrapper.PostLogin)
 	router.GET(options.BaseURL+"/manageFarms/:farmUuid", wrapper.GetManageFarmsFarmUuid)
 	router.GET(options.BaseURL+"/manageFarms/:farmUuid/:farmManageUuid", wrapper.GetManageFarmsFarmUuidFarmManageUuid)
+	router.GET(options.BaseURL+"/manageFarms/:farmUuid/:farmManageUuid/:rowId", wrapper.GetManageFarmsFarmUuidFarmManageUuidRowId)
 	router.GET(options.BaseURL+"/managePlant", wrapper.GetManagePlant)
 }

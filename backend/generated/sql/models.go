@@ -21,6 +21,14 @@ type GroupFarm struct {
 	UpdatedBy uuid.NullUUID
 }
 
+type ManageCell struct {
+	CellID         uuid.UUID
+	FarmManageUuid uuid.UUID
+	FurrowID       int32
+	CellRow        int32
+	CellColumn     int32
+}
+
 type ManageFarmsInfo struct {
 	FarmUuid       uuid.UUID
 	FarmManageUuid uuid.UUID
@@ -41,6 +49,27 @@ type ManageFurrow struct {
 	Rows            int32
 	MinPlantSpacing int32
 	FurrowWidth     int32
+	FurrowLength    int32
+}
+
+type ManageHealthCell struct {
+	CellID           uuid.UUID
+	GrowthStage      int32
+	Status           int32
+	PoorGrowthReason sql.NullInt32
+}
+
+type ManageInvariableCell struct {
+	CellID      uuid.UUID
+	Item        string
+	Variety     string
+	DatePlanted time.Time
+}
+
+type ManageVariableCell struct {
+	CellID             uuid.UUID
+	DateHarvestPlanted sql.NullTime
+	Memo               sql.NullString
 }
 
 type User struct {

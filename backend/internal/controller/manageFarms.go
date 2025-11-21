@@ -76,3 +76,13 @@ func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, fa
 	}
 	c.JSON(http.StatusOK, res)
 }
+
+// 畝に紐付くCell情報
+func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+	res, err := m.svc.GetManageFurrowAndCellInfo(farmUuid, farmManageUuid, rowId)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "get furrow and cell Info failed"})
+		return
+	}
+	c.JSON(http.StatusOK, res)
+}

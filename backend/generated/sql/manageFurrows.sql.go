@@ -12,6 +12,37 @@ import (
 	"github.com/google/uuid"
 )
 
+const getFurrowInfoByRowId = `-- name: GetFurrowInfoByRowId :one
+SELECT rows, min_plant_spacing, furrow_width,furrow_length
+FROM manage_furrow
+WHERE farm_manage_uuid = $1
+  AND furrow_id = $2
+`
+
+type GetFurrowInfoByRowIdParams struct {
+	FarmManageUuid uuid.UUID
+	FurrowID       int32
+}
+
+type GetFurrowInfoByRowIdRow struct {
+	Rows            int32
+	MinPlantSpacing int32
+	FurrowWidth     int32
+	FurrowLength    int32
+}
+
+func (q *Queries) GetFurrowInfoByRowId(ctx context.Context, arg GetFurrowInfoByRowIdParams) (GetFurrowInfoByRowIdRow, error) {
+	row := q.db.QueryRowContext(ctx, getFurrowInfoByRowId, arg.FarmManageUuid, arg.FurrowID)
+	var i GetFurrowInfoByRowIdRow
+	err := row.Scan(
+		&i.Rows,
+		&i.MinPlantSpacing,
+		&i.FurrowWidth,
+		&i.FurrowLength,
+	)
+	return i, err
+}
+
 const getFurrowNumberByManageUuid = `-- name: GetFurrowNumberByManageUuid :one
 SELECT furrow_number
 FROM manage_farms_info

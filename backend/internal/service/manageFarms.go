@@ -99,6 +99,46 @@ func (s *Service) GetManageFarmFurrowInfo(farmUuid openapi_types.UUID, farmManag
 	return response, nil
 }
 
+// 畝と畝に紐付くCell情報
+func (s *Service) GetManageFurrowAndCellInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) (api.FurrowCellInfo, error) {
+	// DB層を呼び出し
+	// 畝の詳細情報を取得
+	dbFurrowRes, err := s.dbRepo.GetFurrowInfo(farmManageUuid, rowId)
+	if err != nil {
+		return api.FurrowCellInfo{}, err
+	}
+
+	// 畝に紐付くCellの情報を取得
+	dbCellRes, err := s.dbRepo.GetCellsInfoByFurrow(farmManageUuid, rowId)
+	if err != nil {
+		return api.FurrowCellInfo{}, err
+	}
+	// 整形
+	var cellsRes []api.CellInfo
+	for _, c := range dbCellRes {
+		cellsRes = append(cellsRes, api.CellInfo{
+			CellRow:            c.CellRow,
+			CellColumn:         c.CellColumn,
+			CropItem:           c.Item.String,
+			Variety:            c.Variety.String,
+			DatePlanted:        c.DatePlanted.Time.String(),
+			Status:             c.Status.Int32,
+			GrowthStage:        c.GrowthStage.Int32,
+			DateHarvestPlanted: c.DateHarvestPlanted.Time.String(),
+			PoorGrowthReason:   c.PoorGrowthReason.Int32,
+			Memo:               c.Memo.String,
+		})
+	}
+
+	return api.FurrowCellInfo{
+		Rows:            dbFurrowRes.Rows,
+		FurrowLength:    dbFurrowRes.FurrowLength,
+		FurrowWidth:     dbFurrowRes.FurrowWidth,
+		MinPlantSpacing: dbFurrowRes.MinPlantSpacing,
+		CellInfoArray:   cellsRes,
+	}, nil
+}
+
 // ヘルパー関数
 func toNullString(s string) default_sql.NullString {
 	if s == "" {
