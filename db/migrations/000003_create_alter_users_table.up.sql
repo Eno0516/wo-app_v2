@@ -13,7 +13,7 @@ CREATE TABLE users (
 );
 
 -- 初期ユーザー追加
-INSERT INTO users (user_id, group_id, password, group_uuid)
+INSERT INTO users (user_id, group_id, password_hash, group_uuid)
 VALUES (
   'admin',
   'agriculture-wo',
