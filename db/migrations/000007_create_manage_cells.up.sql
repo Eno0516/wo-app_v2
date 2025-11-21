@@ -6,5 +6,5 @@ CREATE TABLE manage_cells (
   cell_column INTEGER NOT NULL,   -- 列番号
 
   FOREIGN KEY (farm_manage_uuid) REFERENCES manage_farms_info(farm_manage_uuid) ON DELETE CASCADE,
-  FOREIGN KEY (furrow_id) REFERENCES manage_furrows(furrow_id) ON DELETE CASCADE
+  FOREIGN KEY (farm_manage_uuid,furrow_id) REFERENCES manage_furrows(furrow_id) ON DELETE CASCADE
 );
