@@ -1,4 +1,4 @@
-CREATE TABLE manage_furrow (
+CREATE TABLE manage_furrows (
   farm_manage_uuid UUID NOT NULL,
   furrow_id INTEGER NOT NULL,
   rows INTEGER NOT NULL,
