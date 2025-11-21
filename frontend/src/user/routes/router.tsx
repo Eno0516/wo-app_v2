@@ -2,7 +2,7 @@ import { type RouteObject } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import MemberPage from "../pages/MemberPage";
-import ManageFarmPage from "../pages/MemberPage";
+import ManageFarmPage from "../pages/ManageFarmPage";
 
 export const userRoutes: RouteObject[] = [
     {path: "/",element: <HomePage />},
