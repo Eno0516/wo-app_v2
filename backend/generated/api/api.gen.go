@@ -93,6 +93,12 @@ type PutGroupsGroupUuidManageFarmsJSONRequestBody = FarmInfoDetail
 // PostLoginJSONRequestBody defines body for PostLogin for application/json ContentType.
 type PostLoginJSONRequestBody = LoginOrder
 
+// PostManageFarmsFarmUuidFarmManageUuidRowIdJSONRequestBody defines body for PostManageFarmsFarmUuidFarmManageUuidRowId for application/json ContentType.
+type PostManageFarmsFarmUuidFarmManageUuidRowIdJSONRequestBody = FurrowCellInfo
+
+// PostManageFarmsFarmUuidFarmManageUuidRowIdCellJSONRequestBody defines body for PostManageFarmsFarmUuidFarmManageUuidRowIdCell for application/json ContentType.
+type PostManageFarmsFarmUuidFarmManageUuidRowIdCellJSONRequestBody = CellInfo
+
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// Get Farms by GroupUUID
@@ -116,6 +122,12 @@ type ServerInterface interface {
 	// Get Furrow Cell Info
 	// (GET /manageFarms/{farmUuid}/{farmManageUuid}/{rowId})
 	GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32)
+	// Create Furrow Cell Info
+	// (POST /manageFarms/{farmUuid}/{farmManageUuid}/{rowId})
+	PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32)
+	// Create Cell Info
+	// (POST /manageFarms/{farmUuid}/{farmManageUuid}/{rowId}/cell)
+	PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32)
 	// Get all users
 	// (GET /managePlant)
 	GetManagePlant(c *gin.Context)
@@ -314,6 +326,90 @@ func (siw *ServerInterfaceWrapper) GetManageFarmsFarmUuidFarmManageUuidRowId(c *
 	siw.Handler.GetManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
 }
 
+// PostManageFarmsFarmUuidFarmManageUuidRowId operation middleware
+func (siw *ServerInterfaceWrapper) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "farmUuid" -------------
+	var farmUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "farmUuid", c.Param("farmUuid"), &farmUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter farmUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Path parameter "farmManageUuid" -------------
+	var farmManageUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "farmManageUuid", c.Param("farmManageUuid"), &farmManageUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter farmManageUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Path parameter "rowId" -------------
+	var rowId int32
+
+	err = runtime.BindStyledParameterWithOptions("simple", "rowId", c.Param("rowId"), &rowId, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter rowId: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.PostManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
+}
+
+// PostManageFarmsFarmUuidFarmManageUuidRowIdCell operation middleware
+func (siw *ServerInterfaceWrapper) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "farmUuid" -------------
+	var farmUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "farmUuid", c.Param("farmUuid"), &farmUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter farmUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Path parameter "farmManageUuid" -------------
+	var farmManageUuid openapi_types.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "farmManageUuid", c.Param("farmManageUuid"), &farmManageUuid, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter farmManageUuid: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Path parameter "rowId" -------------
+	var rowId int32
+
+	err = runtime.BindStyledParameterWithOptions("simple", "rowId", c.Param("rowId"), &rowId, runtime.BindStyledParameterOptions{Explode: false, Required: true})
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter rowId: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
+}
+
 // GetManagePlant operation middleware
 func (siw *ServerInterfaceWrapper) GetManagePlant(c *gin.Context) {
 
@@ -361,5 +457,7 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/manageFarms/:farmUuid", wrapper.GetManageFarmsFarmUuid)
 	router.GET(options.BaseURL+"/manageFarms/:farmUuid/:farmManageUuid", wrapper.GetManageFarmsFarmUuidFarmManageUuid)
 	router.GET(options.BaseURL+"/manageFarms/:farmUuid/:farmManageUuid/:rowId", wrapper.GetManageFarmsFarmUuidFarmManageUuidRowId)
+	router.POST(options.BaseURL+"/manageFarms/:farmUuid/:farmManageUuid/:rowId", wrapper.PostManageFarmsFarmUuidFarmManageUuidRowId)
+	router.POST(options.BaseURL+"/manageFarms/:farmUuid/:farmManageUuid/:rowId/cell", wrapper.PostManageFarmsFarmUuidFarmManageUuidRowIdCell)
 	router.GET(options.BaseURL+"/managePlant", wrapper.GetManagePlant)
 }

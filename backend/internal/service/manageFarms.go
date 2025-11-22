@@ -139,6 +139,44 @@ func (s *Service) GetManageFurrowAndCellInfo(farmUuid openapi_types.UUID, farmMa
 	}, nil
 }
 
+// 畝・Cell情報を作成
+func (s *Service) CreateFurrowCellInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32, req api.FurrowCellInfo) error {
+	params := sql.CreateFurrowInfoParams{
+		FarmManageUuid:  farmManageUuid,
+		FurrowID:        rowId,
+		Rows:            req.Rows,
+		MinPlantSpacing: req.MinPlantSpacing,
+		FurrowWidth:     req.FurrowWidth,
+		FurrowLength:    req.FurrowLength,
+	}
+	err := s.dbRepo.CreateFurrowInfo(params)
+	if err != nil {
+		return err
+	}
+	// CellInfoも一括登録の場合は登録
+	if len(req.CellInfoArray) > 0 {
+		for _, cell := range req.CellInfoArray {
+			err = s.dbRepo.CreateCellInfo(farmManageUuid, rowId, cell)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// 畝・Cell情報を更新
+// Cell情報を作成
+func (s *Service) CreateCellInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32, req api.CellInfo) error {
+	err := s.dbRepo.CreateCellInfo(farmManageUuid, rowId, req)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Cell情報を更新
+
 // ヘルパー関数
 func toNullString(s string) default_sql.NullString {
 	if s == "" {

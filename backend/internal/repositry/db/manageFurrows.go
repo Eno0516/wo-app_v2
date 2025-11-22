@@ -28,3 +28,9 @@ func (r *DBRepositry) GetFurrowInfo(farmManageUuid openapi_types.UUID, rowId int
 	}
 	return dbRes, nil
 }
+
+func (r *DBRepositry) CreateFurrowInfo(params sql.CreateFurrowInfoParams) error {
+	ctx := context.Background()
+	err := r.q.CreateFurrowInfo(ctx, params)
+	return err
+}

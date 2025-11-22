@@ -12,9 +12,49 @@ import (
 	"github.com/google/uuid"
 )
 
+const createFurrowInfo = `-- name: CreateFurrowInfo :exec
+INSERT INTO manage_furrows (
+  farm_manage_uuid,
+  furrow_id,
+  rows,
+  min_plant_spacing,
+  furrow_width,
+  furrow_length
+)
+VALUES (
+  $1,  -- farm_manage_uuid
+  $2,  -- furrow_id
+  $3,  -- rows
+  $4,  -- min_plant_spacing
+  $5,  -- furrow_width
+  $6   -- furrow_length
+)
+`
+
+type CreateFurrowInfoParams struct {
+	FarmManageUuid  uuid.UUID
+	FurrowID        int32
+	Rows            int32
+	MinPlantSpacing int32
+	FurrowWidth     int32
+	FurrowLength    int32
+}
+
+func (q *Queries) CreateFurrowInfo(ctx context.Context, arg CreateFurrowInfoParams) error {
+	_, err := q.db.ExecContext(ctx, createFurrowInfo,
+		arg.FarmManageUuid,
+		arg.FurrowID,
+		arg.Rows,
+		arg.MinPlantSpacing,
+		arg.FurrowWidth,
+		arg.FurrowLength,
+	)
+	return err
+}
+
 const getFurrowInfoByRowId = `-- name: GetFurrowInfoByRowId :one
 SELECT rows, min_plant_spacing, furrow_width,furrow_length
-FROM manage_furrow
+FROM manage_furrows
 WHERE farm_manage_uuid = $1
   AND furrow_id = $2
 `

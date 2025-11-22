@@ -86,3 +86,26 @@ func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Contex
 	}
 	c.JSON(http.StatusOK, res)
 }
+
+// 畝・Cell情報を作成
+func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+	var req api.FurrowCellInfo
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	m.svc.CreateFurrowCellInfo(farmUuid, farmManageUuid, rowId, req)
+}
+
+// 畝・Cell情報を更新
+// Cell情報を作成
+func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+	var req api.CellInfo
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	m.svc.CreateCellInfo(farmUuid, farmManageUuid, rowId, req)
+}
+
+// Cell情報を更新

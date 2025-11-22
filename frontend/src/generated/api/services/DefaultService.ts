@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CellInfo } from '../models/CellInfo';
 import type { FarmInfo } from '../models/FarmInfo';
 import type { FarmInfoDetail } from '../models/FarmInfoDetail';
 import type { FarmPageBasicInfo } from '../models/FarmPageBasicInfo';
@@ -158,6 +159,60 @@ export class DefaultService {
                 'farmManageUuid': farmManageUuid,
                 'rowId': rowId,
             },
+        });
+    }
+    /**
+     * Create Furrow Cell Info
+     * @param farmUuid
+     * @param farmManageUuid
+     * @param rowId
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static postManageFarms(
+        farmUuid: string,
+        farmManageUuid: string,
+        rowId: number,
+        requestBody: FurrowCellInfo,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}/{rowId}',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+                'rowId': rowId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Create Cell Info
+     * @param farmUuid
+     * @param farmManageUuid
+     * @param rowId
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static postManageFarmsCell(
+        farmUuid: string,
+        farmManageUuid: string,
+        rowId: number,
+        requestBody: CellInfo,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}/{rowId}/cell',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+                'rowId': rowId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 }

@@ -8,9 +8,150 @@ package sql
 import (
 	"context"
 	"database/sql"
+	"time"
 
 	"github.com/google/uuid"
 )
+
+const createCell = `-- name: CreateCell :exec
+INSERT INTO manage_cells (
+  cell_id,
+  farm_manage_uuid,
+  furrow_id,
+  cell_row,
+  cell_column
+)
+VALUES (
+  gen_random_uuid(),  
+  $1, $2, $3, $4
+)
+`
+
+type CreateCellParams struct {
+	FarmManageUuid uuid.UUID
+	FurrowID       int32
+	CellRow        int32
+	CellColumn     int32
+}
+
+func (q *Queries) CreateCell(ctx context.Context, arg CreateCellParams) error {
+	_, err := q.db.ExecContext(ctx, createCell,
+		arg.FarmManageUuid,
+		arg.FurrowID,
+		arg.CellRow,
+		arg.CellColumn,
+	)
+	return err
+}
+
+const createHealthCellInfo = `-- name: CreateHealthCellInfo :exec
+INSERT INTO manage_health_cells (
+  cell_id,
+  growth_stage,
+  status,
+  poor_growth_reason
+)
+VALUES (
+  $1, $2, $3, $4
+)
+`
+
+type CreateHealthCellInfoParams struct {
+	CellID           uuid.UUID
+	GrowthStage      int32
+	Status           int32
+	PoorGrowthReason sql.NullInt32
+}
+
+func (q *Queries) CreateHealthCellInfo(ctx context.Context, arg CreateHealthCellInfoParams) error {
+	_, err := q.db.ExecContext(ctx, createHealthCellInfo,
+		arg.CellID,
+		arg.GrowthStage,
+		arg.Status,
+		arg.PoorGrowthReason,
+	)
+	return err
+}
+
+const createInvariableCellInfo = `-- name: CreateInvariableCellInfo :exec
+INSERT INTO manage_invariable_cells (
+  cell_id,
+  item,
+  variety,
+  date_planted
+)
+VALUES (
+  $1, $2, $3, $4
+)
+`
+
+type CreateInvariableCellInfoParams struct {
+	CellID      uuid.UUID
+	Item        string
+	Variety     string
+	DatePlanted time.Time
+}
+
+func (q *Queries) CreateInvariableCellInfo(ctx context.Context, arg CreateInvariableCellInfoParams) error {
+	_, err := q.db.ExecContext(ctx, createInvariableCellInfo,
+		arg.CellID,
+		arg.Item,
+		arg.Variety,
+		arg.DatePlanted,
+	)
+	return err
+}
+
+const createVariableCellInfo = `-- name: CreateVariableCellInfo :exec
+INSERT INTO manage_variable_cells (
+  cell_id,
+  date_harvest_planted,
+  memo
+)
+VALUES (
+  $1, $2, $3
+)
+`
+
+type CreateVariableCellInfoParams struct {
+	CellID             uuid.UUID
+	DateHarvestPlanted sql.NullTime
+	Memo               sql.NullString
+}
+
+func (q *Queries) CreateVariableCellInfo(ctx context.Context, arg CreateVariableCellInfoParams) error {
+	_, err := q.db.ExecContext(ctx, createVariableCellInfo, arg.CellID, arg.DateHarvestPlanted, arg.Memo)
+	return err
+}
+
+const getCellUuid = `-- name: GetCellUuid :one
+SELECT
+  cell_id
+FROM manage_cells
+WHERE farm_manage_uuid = $1
+  AND furrow_id = $2
+  AND cell_row = $3
+  AND cell_column = $4
+`
+
+type GetCellUuidParams struct {
+	FarmManageUuid uuid.UUID
+	FurrowID       int32
+	CellRow        int32
+	CellColumn     int32
+}
+
+func (q *Queries) GetCellUuid(ctx context.Context, arg GetCellUuidParams) (uuid.UUID, error) {
+	row := q.db.QueryRowContext(ctx, getCellUuid,
+		arg.FarmManageUuid,
+		arg.FurrowID,
+		arg.CellRow,
+		arg.CellColumn,
+	)
+	var cell_id uuid.UUID
+	err := row.Scan(&cell_id)
+	return cell_id, err
+}
 
 const getFullCellInfoByFurrow = `-- name: GetFullCellInfoByFurrow :many
 SELECT

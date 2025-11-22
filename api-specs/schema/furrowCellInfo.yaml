@@ -62,6 +62,27 @@ CellInfo:
       type: string
     memo:
       type: string
+
+FurrowInfo:
+  type: object
+  required:
+    - rows
+    - furrowWidth
+    - furrowLength
+    - minPlantSpacing
+  properties:
+    rows:
+      type: integer
+      format: int32
+    furrowWidth:
+      type: integer
+      format: int32
+    furrowLength:
+      type: integer
+      format: int32
+    minPlantSpacing:
+      type: integer
+      format: int32
     
     
 
