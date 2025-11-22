@@ -189,9 +189,69 @@ paths:
       responses:
         '200':
           description: OK
+    put:
+      summary: Update Furrow Cell Info
+      parameters:
+        - name: farmUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: farmManageUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: rowId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FurrowCellInfo'
+      responses:
+        '200':
+          description: OK
   /manageFarms/{farmUuid}/{farmManageUuid}/{rowId}/cell:
     post:
       summary: Create Cell Info
+      parameters:
+        - name: farmUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: farmManageUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: rowId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CellInfo'
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update Cell Info
       parameters:
         - name: farmUuid
           in: path

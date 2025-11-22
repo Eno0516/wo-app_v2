@@ -71,3 +71,26 @@ INSERT INTO manage_health_cells (
 VALUES (
   $1, $2, $3, $4
 );
+
+-- name: UpdateInvariableCellInfo :exec
+UPDATE manage_invariable_cells
+SET
+  item = $2,
+  variety = $3,
+  date_planted = $4
+WHERE cell_id = $1;
+
+-- name: UpdateVariableCellInfo :exec
+UPDATE manage_variable_cells
+SET
+  date_harvest_planted = $2,
+  memo = $3
+WHERE cell_id = $1;
+
+-- name: UpdateHealthCellInfo :exec
+UPDATE manage_health_cells
+SET
+  growth_stage = $2,
+  status = $3,
+  poor_growth_reason = $4
+WHERE cell_id = $1;

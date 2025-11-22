@@ -95,3 +95,35 @@ func (q *Queries) GetFurrowNumberByManageUuid(ctx context.Context, farmManageUui
 	err := row.Scan(&furrow_number)
 	return furrow_number, err
 }
+
+const updateFurrowInfo = `-- name: UpdateFurrowInfo :exec
+UPDATE manage_furrows
+SET
+  rows = $3,
+  min_plant_spacing = $4,
+  furrow_width = $5,
+  furrow_length = $6
+WHERE farm_manage_uuid = $1
+  AND furrow_id = $2
+`
+
+type UpdateFurrowInfoParams struct {
+	FarmManageUuid  uuid.UUID
+	FurrowID        int32
+	Rows            int32
+	MinPlantSpacing int32
+	FurrowWidth     int32
+	FurrowLength    int32
+}
+
+func (q *Queries) UpdateFurrowInfo(ctx context.Context, arg UpdateFurrowInfoParams) error {
+	_, err := q.db.ExecContext(ctx, updateFurrowInfo,
+		arg.FarmManageUuid,
+		arg.FurrowID,
+		arg.Rows,
+		arg.MinPlantSpacing,
+		arg.FurrowWidth,
+		arg.FurrowLength,
+	)
+	return err
+}

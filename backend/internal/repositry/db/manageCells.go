@@ -97,3 +97,68 @@ func (r *DBRepositry) CreateCellInfo(farmManageUuid openapi_types.UUID, furrowId
 	}
 	return nil
 }
+
+func (r *DBRepositry) UpdateCellInfo(farmManageUuid openapi_types.UUID, furrowId int32, cellInfo api.CellInfo) error {
+	ctx := context.Background()
+	uuidParams := sql.GetCellUuidParams{
+		FarmManageUuid: farmManageUuid,
+		FurrowID:       furrowId,
+		CellRow:        cellInfo.CellRow,
+		CellColumn:     cellInfo.CellColumn,
+	}
+	cellUuid, uuidErr := r.q.GetCellUuid(ctx, uuidParams)
+	if uuidErr != nil {
+		return uuidErr
+	}
+	layout := "2025-01-01"
+	t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
+	if timeErr != nil {
+		return timeErr
+	}
+	invarCellParams := sql.UpdateInvariableCellInfoParams{
+		CellID:      cellUuid,
+		Item:        cellInfo.CropItem,
+		Variety:     cellInfo.Variety,
+		DatePlanted: t,
+	}
+	invarCellerr := r.q.UpdateInvariableCellInfo(ctx, invarCellParams)
+	if invarCellerr != nil {
+		return invarCellerr
+	}
+	ht, hTimeErr := time.Parse(layout, cellInfo.DateHarvestPlanted)
+	if hTimeErr != nil {
+		return hTimeErr
+	}
+	nht := default_sql.NullTime{
+		Time:  ht,
+		Valid: true,
+	}
+	nMemo := default_sql.NullString{
+		String: cellInfo.Memo,
+		Valid:  true,
+	}
+	varCellParas := sql.UpdateVariableCellInfoParams{
+		CellID:             cellUuid,
+		DateHarvestPlanted: nht,
+		Memo:               nMemo,
+	}
+	varCellErr := r.q.UpdateVariableCellInfo(ctx, varCellParas)
+	if varCellErr != nil {
+		return varCellErr
+	}
+	nPoorReason := default_sql.NullInt32{
+		Int32: cellInfo.PoorGrowthReason,
+		Valid: true,
+	}
+	healthParams := sql.UpdateHealthCellInfoParams{
+		CellID:           cellUuid,
+		GrowthStage:      cellInfo.GrowthStage,
+		Status:           cellInfo.Status,
+		PoorGrowthReason: nPoorReason,
+	}
+	healthErr := r.q.UpdateHealthCellInfo(ctx, healthParams)
+	if healthErr != nil {
+		return healthErr
+	}
+	return nil
+}

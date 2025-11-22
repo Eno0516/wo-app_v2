@@ -225,3 +225,74 @@ func (q *Queries) GetFullCellInfoByFurrow(ctx context.Context, arg GetFullCellIn
 	}
 	return items, nil
 }
+
+const updateHealthCellInfo = `-- name: UpdateHealthCellInfo :exec
+UPDATE manage_health_cells
+SET
+  growth_stage = $2,
+  status = $3,
+  poor_growth_reason = $4
+WHERE cell_id = $1
+`
+
+type UpdateHealthCellInfoParams struct {
+	CellID           uuid.UUID
+	GrowthStage      int32
+	Status           int32
+	PoorGrowthReason sql.NullInt32
+}
+
+func (q *Queries) UpdateHealthCellInfo(ctx context.Context, arg UpdateHealthCellInfoParams) error {
+	_, err := q.db.ExecContext(ctx, updateHealthCellInfo,
+		arg.CellID,
+		arg.GrowthStage,
+		arg.Status,
+		arg.PoorGrowthReason,
+	)
+	return err
+}
+
+const updateInvariableCellInfo = `-- name: UpdateInvariableCellInfo :exec
+UPDATE manage_invariable_cells
+SET
+  item = $2,
+  variety = $3,
+  date_planted = $4
+WHERE cell_id = $1
+`
+
+type UpdateInvariableCellInfoParams struct {
+	CellID      uuid.UUID
+	Item        string
+	Variety     string
+	DatePlanted time.Time
+}
+
+func (q *Queries) UpdateInvariableCellInfo(ctx context.Context, arg UpdateInvariableCellInfoParams) error {
+	_, err := q.db.ExecContext(ctx, updateInvariableCellInfo,
+		arg.CellID,
+		arg.Item,
+		arg.Variety,
+		arg.DatePlanted,
+	)
+	return err
+}
+
+const updateVariableCellInfo = `-- name: UpdateVariableCellInfo :exec
+UPDATE manage_variable_cells
+SET
+  date_harvest_planted = $2,
+  memo = $3
+WHERE cell_id = $1
+`
+
+type UpdateVariableCellInfoParams struct {
+	CellID             uuid.UUID
+	DateHarvestPlanted sql.NullTime
+	Memo               sql.NullString
+}
+
+func (q *Queries) UpdateVariableCellInfo(ctx context.Context, arg UpdateVariableCellInfoParams) error {
+	_, err := q.db.ExecContext(ctx, updateVariableCellInfo, arg.CellID, arg.DateHarvestPlanted, arg.Memo)
+	return err
+}

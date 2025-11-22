@@ -46,3 +46,9 @@ func (impl DefaultAPIImpl) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Con
 func (impl DefaultAPIImpl) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
 	impl.PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
 }
+func (impl DefaultAPIImpl) PutManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+	impl.PutManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
+}
+func (impl DefaultAPIImpl) PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+	impl.PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
+}

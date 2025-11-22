@@ -26,3 +26,14 @@ VALUES (
   $5,  -- furrow_width
   $6   -- furrow_length
 );
+
+-- name: UpdateFurrowInfo :exec
+UPDATE manage_furrows
+SET
+  rows = $3,
+  min_plant_spacing = $4,
+  furrow_width = $5,
+  furrow_length = $6
+WHERE farm_manage_uuid = $1
+  AND furrow_id = $2;
+
