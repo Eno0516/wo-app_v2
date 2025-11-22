@@ -28,8 +28,8 @@ func (impl DefaultAPIImpl) GetGroupsGroupUuidManageFarms(c *gin.Context, groupUu
 func (impl DefaultAPIImpl) PostGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
 	impl.ManageFarms.PostGroupsGroupUuidManageFarms(c, groupUuid)
 }
-func (impl DefaultAPIImpl) PutGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
-	impl.ManageFarms.PutGroupsGroupUuidManageFarms(c, groupUuid)
+func (impl DefaultAPIImpl) PutManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
+	impl.ManageFarms.PutManageFarmsFarmUuidFarmManageUuid(c, farmUuid, farmManageUuid)
 }
 func (impl DefaultAPIImpl) GetManageFarmsFarmUuid(c *gin.Context, farmUuid openapi_types.UUID) {
 	impl.ManageFarms.GetManageFarmsFarmUuid(c, farmUuid)

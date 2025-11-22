@@ -46,13 +46,13 @@ func (m *ManageFarmsAPI) PostGroupsGroupUuidManageFarms(c *gin.Context, groupUui
 	}
 }
 
-func (m *ManageFarmsAPI) PutGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
+func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
 	var req api.FarmInfoDetail
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
-	err := m.svc.UpdateGroupFarms(groupUuid, req)
+	err := m.svc.UpdateGroupFarms(farmUuid, farmManageUuid, req)
 	if err != nil {
 		c.JSON(401, gin.H{"error": "update failed"})
 		return
@@ -98,6 +98,10 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Conte
 }
 
 // 畝・Cell情報を更新
+func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+
+}
+
 // Cell情報を作成
 func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
 	var req api.CellInfo
@@ -109,3 +113,6 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.C
 }
 
 // Cell情報を更新
+func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
+
+}

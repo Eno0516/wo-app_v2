@@ -20,3 +20,27 @@ get:
         application/json:
           schema:
             $ref: '../schema/furrowBasicInfo.yaml#/FurrowBasicInfo' 
+put:
+  summary: Update Farm FarmInfo
+  parameters:
+    - name: farmUuid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: farmManageUuid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schema/manageFarm.yaml#/FarmInfoDetail'
+  responses:
+    '200':
+      description: OK

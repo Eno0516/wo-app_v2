@@ -6,6 +6,7 @@ import (
 
 	"github.com/Eno0516/wo-app-ver2/backend/generated/sql"
 	appError "github.com/Eno0516/wo-app-ver2/backend/internal/error"
+	"github.com/google/uuid"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
@@ -44,10 +45,32 @@ func (r *DBRepositry) RegisterFarms(groupUuid openapi_types.UUID, farmName strin
 	}
 	return dbRes, nil
 }
+func (r *DBRepositry) UpdateFarmName(farmUuid openapi_types.UUID, farmName string) error {
+	ctx := context.Background()
+	params := sql.UpdateFarmNameParams{
+		FarmUuid:  farmUuid,
+		FarmName:  farmName,
+		UpdatedBy: uuid.NullUUID{},
+	}
+	err := r.q.UpdateFarmName(ctx, params)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 func (r *DBRepositry) RegisterFarmInfo(params sql.CreateManageFarmInfoParams) error {
 	ctx := context.Background()
 	err := r.q.CreateManageFarmInfo(ctx, params)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *DBRepositry) UpdateFarmInfo(farmManageUuid openapi_types.UUID, params sql.UpdateFarmInfoParams) error {
+	ctx := context.Background()
+	err := r.q.UpdateFarmInfo(ctx, params)
 	if err != nil {
 		return err
 	}

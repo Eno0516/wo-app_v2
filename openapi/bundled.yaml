@@ -70,24 +70,6 @@ paths:
       responses:
         '200':
           description: OK
-    put:
-      summary: Update Farm FarmInfo
-      parameters:
-        - name: groupUuid
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FarmInfoDetail'
-      responses:
-        '200':
-          description: OK
   /manageFarms/{farmUuid}:
     get:
       summary: Get Farm Page Info
@@ -130,6 +112,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FurrowBasicInfo'
+    put:
+      summary: Update Farm FarmInfo
+      parameters:
+        - name: farmUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: farmManageUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FarmInfoDetail'
+      responses:
+        '200':
+          description: OK
   /manageFarms/{farmUuid}/{farmManageUuid}/{rowId}:
     get:
       summary: Get Furrow Cell Info

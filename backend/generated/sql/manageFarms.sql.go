@@ -82,3 +82,59 @@ func (q *Queries) RegisterGroupFarm(ctx context.Context, arg RegisterGroupFarmPa
 	err := row.Scan(&farm_uuid)
 	return farm_uuid, err
 }
+
+const updateFarmInfo = `-- name: UpdateFarmInfo :exec
+UPDATE manage_farms_info
+SET
+  farm_length   = $2,
+  farm_width    = $3,
+  furrow_number = $4,
+  farm_season   = $5,
+  farm_year     = $6,
+  updated_at    = now(),
+  updated_by    = $7
+WHERE farm_manage_uuid = $1
+`
+
+type UpdateFarmInfoParams struct {
+	FarmManageUuid uuid.UUID
+	FarmLength     sql.NullString
+	FarmWidth      sql.NullString
+	FurrowNumber   sql.NullInt32
+	FarmSeason     []int32
+	FarmYear       sql.NullInt32
+	UpdatedBy      uuid.NullUUID
+}
+
+func (q *Queries) UpdateFarmInfo(ctx context.Context, arg UpdateFarmInfoParams) error {
+	_, err := q.db.ExecContext(ctx, updateFarmInfo,
+		arg.FarmManageUuid,
+		arg.FarmLength,
+		arg.FarmWidth,
+		arg.FurrowNumber,
+		pq.Array(arg.FarmSeason),
+		arg.FarmYear,
+		arg.UpdatedBy,
+	)
+	return err
+}
+
+const updateFarmName = `-- name: UpdateFarmName :exec
+UPDATE group_farms
+SET
+  farm_name = $2,
+  updated_at = now(),
+  updated_by = $3
+WHERE farm_uuid = $1
+`
+
+type UpdateFarmNameParams struct {
+	FarmUuid  uuid.UUID
+	FarmName  string
+	UpdatedBy uuid.NullUUID
+}
+
+func (q *Queries) UpdateFarmName(ctx context.Context, arg UpdateFarmNameParams) error {
+	_, err := q.db.ExecContext(ctx, updateFarmName, arg.FarmUuid, arg.FarmName, arg.UpdatedBy)
+	return err
+}

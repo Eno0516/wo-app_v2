@@ -57,8 +57,28 @@ func (s *Service) RegisterGroupFarms(groupUuid openapi_types.UUID, req api.FarmI
 	return nil
 }
 
-func (s *Service) UpdateGroupFarms(groupUuid openapi_types.UUID, req api.FarmInfoDetail) error {
+func (s *Service) UpdateGroupFarms(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, req api.FarmInfoDetail) error {
 	// DB層を呼び出し
+	// 名前の更新
+	err := s.dbRepo.UpdateFarmName(farmUuid, req.FarmName)
+	if err != nil {
+		return err
+	}
+	// 詳細の更新
+	params := sql.UpdateFarmInfoParams{
+		FarmManageUuid: farmManageUuid,
+		FarmLength:     toNullString(req.FarmLength),
+		FarmWidth:      toNullString(req.FarmWidth),
+		FurrowNumber:   toNullInt32(req.FurrowNumber),
+		FarmSeason:     toInt32Slice(req.FarmSeasons),
+		FarmYear:       toNullInt32(&req.FarmYear),
+		UpdatedBy:      uuid.NullUUID{},
+	}
+	errFarmInfo := s.dbRepo.UpdateFarmInfo(farmManageUuid, params)
+	if errFarmInfo != nil {
+		return errFarmInfo
+	}
+
 	return nil
 }
 
@@ -166,6 +186,31 @@ func (s *Service) CreateFurrowCellInfo(farmUuid openapi_types.UUID, farmManageUu
 }
 
 // 畝・Cell情報を更新
+func (s *Service) UpdateFurrowCellInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32, req api.FurrowCellInfo) error {
+	params := sql.UpdateFurrowInfoParams{
+		FarmManageUuid:  farmManageUuid,
+		FurrowID:        rowId,
+		Rows:            req.Rows,
+		MinPlantSpacing: req.MinPlantSpacing,
+		FurrowWidth:     req.FurrowWidth,
+		FurrowLength:    req.FurrowLength,
+	}
+	err := s.dbRepo.UpdateFurrowInfo(params)
+	if err != nil {
+		return err
+	}
+	// CellInfoも一括登録の場合は更新
+	if len(req.CellInfoArray) > 0 {
+		for _, cell := range req.CellInfoArray {
+			err = s.dbRepo.UpdateCellInfo(farmManageUuid, rowId, cell)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 // Cell情報を作成
 func (s *Service) CreateCellInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32, req api.CellInfo) error {
 	err := s.dbRepo.CreateCellInfo(farmManageUuid, rowId, req)
@@ -176,6 +221,13 @@ func (s *Service) CreateCellInfo(farmUuid openapi_types.UUID, farmManageUuid ope
 }
 
 // Cell情報を更新
+func (s *Service) UpdateCellInfo(farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32, req api.CellInfo) error {
+	err := s.dbRepo.UpdateCellInfo(farmManageUuid, rowId, req)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 // ヘルパー関数
 func toNullString(s string) default_sql.NullString {
