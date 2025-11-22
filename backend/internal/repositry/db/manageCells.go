@@ -45,7 +45,7 @@ func (r *DBRepositry) CreateCellInfo(farmManageUuid openapi_types.UUID, furrowId
 	if uuidErr != nil {
 		return uuidErr
 	}
-	layout := "2025-01-01"
+	layout := "2006-01-02"
 	t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
 	if timeErr != nil {
 		return timeErr
@@ -110,7 +110,7 @@ func (r *DBRepositry) UpdateCellInfo(farmManageUuid openapi_types.UUID, furrowId
 	if uuidErr != nil {
 		return uuidErr
 	}
-	layout := "2025-01-01"
+	layout := "2006-01-02"
 	t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
 	if timeErr != nil {
 		return timeErr

@@ -41,14 +41,14 @@ func (impl DefaultAPIImpl) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Cont
 	impl.ManageFarms.GetManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
 }
 func (impl DefaultAPIImpl) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
-	impl.PostManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
+	impl.ManageFarms.PostManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
 }
 func (impl DefaultAPIImpl) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
-	impl.PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
+	impl.ManageFarms.PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
 }
 func (impl DefaultAPIImpl) PutManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
-	impl.PutManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
+	impl.ManageFarms.PutManageFarmsFarmUuidFarmManageUuidRowId(c, farmUuid, farmManageUuid, rowId)
 }
 func (impl DefaultAPIImpl) PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
-	impl.PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
+	impl.ManageFarms.PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c, farmUuid, farmManageUuid, rowId)
 }

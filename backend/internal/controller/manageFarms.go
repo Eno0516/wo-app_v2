@@ -94,7 +94,11 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Conte
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
-	m.svc.CreateFurrowCellInfo(farmUuid, farmManageUuid, rowId, req)
+	err := m.svc.CreateFurrowCellInfo(farmUuid, farmManageUuid, rowId, req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
+		return
+	}
 }
 
 // 畝・Cell情報を更新
@@ -109,7 +113,11 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.C
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
-	m.svc.CreateCellInfo(farmUuid, farmManageUuid, rowId, req)
+	err := m.svc.CreateCellInfo(farmUuid, farmManageUuid, rowId, req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
+		return
+	}
 }
 
 // Cell情報を更新
