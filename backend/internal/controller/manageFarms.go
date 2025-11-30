@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Eno0516/wo-app-ver2/backend/generated/api"
@@ -21,6 +22,7 @@ func NewManageFarmsAPI(svc *service.Service) *ManageFarmsAPI {
 func (m *ManageFarmsAPI) GetGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
 	res, err := m.svc.GetGroupFarms(groupUuid)
 	if err != nil {
+		log.Printf("failed:%v", err)
 		// AppErrorかどうか
 		if appErr, ok := err.(*appError.AppError); ok {
 			c.JSON(appErr.Status, gin.H{"error": appErr.DistributeError()})
@@ -36,12 +38,14 @@ func (m *ManageFarmsAPI) GetGroupsGroupUuidManageFarms(c *gin.Context, groupUuid
 func (m *ManageFarmsAPI) PostGroupsGroupUuidManageFarms(c *gin.Context, groupUuid openapi_types.UUID) {
 	var req api.FarmInfoDetail
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("failed:%v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
 	err := m.svc.RegisterGroupFarms(groupUuid, req)
 	if err != nil {
-		c.JSON(401, gin.H{"error": "register failed"})
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "register failed"})
 		return
 	}
 }
@@ -49,12 +53,14 @@ func (m *ManageFarmsAPI) PostGroupsGroupUuidManageFarms(c *gin.Context, groupUui
 func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
 	var req api.FarmInfoDetail
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("failed:%v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
 	err := m.svc.UpdateGroupFarms(farmUuid, farmManageUuid, req)
 	if err != nil {
-		c.JSON(401, gin.H{"error": "update failed"})
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "update failed"})
 		return
 	}
 }
@@ -62,7 +68,8 @@ func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuid(c *gin.Context, fa
 func (m *ManageFarmsAPI) GetManageFarmsFarmUuid(c *gin.Context, farmUuid openapi_types.UUID) {
 	res, err := m.svc.GetManageFarmsBasicInfo(farmUuid)
 	if err != nil {
-		c.JSON(401, gin.H{"error": "get farms failed"})
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "get farms failed"})
 		return
 	}
 	c.JSON(http.StatusOK, res)
@@ -71,7 +78,8 @@ func (m *ManageFarmsAPI) GetManageFarmsFarmUuid(c *gin.Context, farmUuid openapi
 func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
 	res, err := m.svc.GetManageFarmFurrowInfo(farmUuid, farmManageUuid)
 	if err != nil {
-		c.JSON(401, gin.H{"error": "get farm furrow failed"})
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "get farm furrow failed"})
 		return
 	}
 	c.JSON(http.StatusOK, res)
@@ -81,7 +89,8 @@ func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuid(c *gin.Context, fa
 func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
 	res, err := m.svc.GetManageFurrowAndCellInfo(farmUuid, farmManageUuid, rowId)
 	if err != nil {
-		c.JSON(401, gin.H{"error": "get furrow and cell Info failed"})
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "get furrow and cell Info failed"})
 		return
 	}
 	c.JSON(http.StatusOK, res)
@@ -91,11 +100,13 @@ func (m *ManageFarmsAPI) GetManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Contex
 func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
 	var req api.FurrowCellInfo
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("failed:%v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
 	err := m.svc.CreateFurrowCellInfo(farmUuid, farmManageUuid, rowId, req)
 	if err != nil {
+		log.Printf("failed:%v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
 		return
 	}
@@ -110,11 +121,13 @@ func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Contex
 func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
 	var req api.CellInfo
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("failed:%v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
 	err := m.svc.CreateCellInfo(farmUuid, farmManageUuid, rowId, req)
 	if err != nil {
+		log.Printf("failed:%v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
 		return
 	}
