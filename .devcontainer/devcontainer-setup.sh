@@ -23,4 +23,5 @@ until pg_isready -h db -p 5432 -U devuser; do
 done
 
 # DBマイグレーション
+migrate -path db/migrations -database "$DATABASE_URL" drop -f
 migrate -path db/migrations -database "$DATABASE_URL" up

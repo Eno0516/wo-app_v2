@@ -25,5 +25,5 @@
             "version": "20"
         }
      },
-    "postCreateCommand": ".devcontainer/devcontainer-setup.sh"
+    "postCreateCommand": "bash .devcontainer/devcontainer-setup.sh"
 }
