@@ -1,6 +1,11 @@
 import {useState} from 'react'
 import InputPopCellData from './InputPopCellData/InputPopCellData'
 
+interface BaseProps {
+    farmUuid: string
+    farmManageUuid: string
+    rowId: number
+}
 export type CellInfo = {
     row: number
     column: number
@@ -14,8 +19,17 @@ export type CellInfo = {
     memo: string
 }
 
+type Props = BaseProps & CellInfo
+
+
 //セルを作成・描画するのみ。そのセルに今後の処理を踏まえてクリックイベントを付随させておく
-function CreateCell (props:CellInfo) {
+function CreateCell (props:Props) {
+    const {
+        farmUuid,
+        farmManageUuid,
+        rowId,
+        ...initial
+    } = props
     // ポップの表示管理
     const [isVisiblePop,setIsVisiblePop] = useState(false)
 
@@ -42,8 +56,11 @@ function CreateCell (props:CellInfo) {
       </div>
       {isVisiblePop && 
         <InputPopCellData 
-        initial={props}
-        initialPoorReason={[props.poorGrowthReason]}
+        farmUuid={farmUuid}
+        farmManageUuid={farmManageUuid}
+        rowId={rowId}
+        initial={initial}
+        initialPoorReason={[initial.poorGrowthReason]}
         onClose={handleClose}
         />
       }

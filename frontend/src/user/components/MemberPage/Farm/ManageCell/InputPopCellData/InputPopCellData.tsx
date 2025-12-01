@@ -2,12 +2,17 @@ import { useState,useEffect } from "react"
 import ReactDOM from "react-dom"
 import InputCellInfo from "./InputCellInfo"
 import { type CellInfo } from "../CreateCell";
+import type { CellInfo as generatedCellInfo } from "../../../../../../generated/api";
 import InputPoorGrowthReason from "./InputPoorGrowthReason";
+import { apiClient } from "../../../../../../api/client";
 
 interface InputPopCellDataProps{
+    farmUuid: string;
+    farmManageUuid: string;
+    rowId: number;
     initial:CellInfo;
-    initialPoorReason:number[]
-    onClose:()=>void
+    initialPoorReason:number[];
+    onClose:()=>void;
 }
 const POP_Cell_Data={
     row:"row",
@@ -35,16 +40,51 @@ export type CellData = {
 
 // 作物管理に必要な情報を入力するためのポップ
 function InputPopCellData(props:InputPopCellDataProps,){
-        const [cellData,setCellData] = useState<CellInfo> ({...props.initial})
+    const [cellData,setCellData] = useState<CellInfo> ({...props.initial})
     // Reaonだけは形式が違うので別で更新
     const [poorReason,setPoorReason] = useState<number[]>(props.initialPoorReason)
     const handleReasonChange = (newSelected:number[]) => {
         setPoorReason(newSelected)
-        }
+    }
+    // 新規保存か更新か
+    const isUpdate = props.initial.row && props.initial.column
     // cell情報を保存
-    const onSave = () => {
-        // 送る形に直さないと
-        console.log("API保存処理を実装")
+    const onSave = async() => {
+        const params:generatedCellInfo = {
+                cellRow: cellData.row,
+                cellColumn: cellData.column,
+                cropItem: cellData.item,
+                variety: cellData.variety,
+                datePlanted: cellData.datePlanted,
+                growthStage: cellData.growthStage,
+                status: cellData.status,
+                poorGrowthReason: cellData.poorGrowthReason,
+                dateHarvestPlanted: cellData.dateHarvestPlanted,
+                memo: cellData.memo
+            }
+        if(isUpdate){
+            try {    
+                const res = await apiClient.putManageFarmsCell(props.farmUuid,props.farmManageUuid,props.rowId,params)
+                if(!res){
+                    throw new Error()
+                }
+            } catch(err){
+                console.error(err)
+            }
+        } else{
+        try{
+            
+            const res = apiClient.postManageFarmsCell(props.farmUuid,props.farmManageUuid,props.rowId,params)
+            if (!res){
+                throw new Error()
+            }
+        }catch(err){
+            console.error(err)
+        } finally{
+            window.location.reload()
+            props.onClose()
+        }
+    }
     }
     const handleClose = () => {
         //親へ結果を通知
@@ -116,7 +156,7 @@ function InputPopCellData(props:InputPopCellDataProps,){
                 />
                 <div className="modal-buttons">
                     <button  
-                    onClick={()=> onSave}>OK</button>
+                    onClick={onSave}>OK</button>
                     <button onClick={handleClose}>Cancel</button>
                 </div>
             </div>

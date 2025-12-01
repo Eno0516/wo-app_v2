@@ -113,6 +113,9 @@ function CreateFurrow (props:CreateFurrowProps) {
                         poorGrowthReason={cell?.poorGrowthReason ?? 0}
                         dateHarvestPlanted={cell?.dateHarvestPlanted ?? ""}
                         memo={cell?.memo ?? ""}
+                        farmUuid={props.farmUuid}
+                        farmManageUuid={props.farmManageUuid}
+                        rowId={props.furrowId}
                          />
                         </div>
                     )
