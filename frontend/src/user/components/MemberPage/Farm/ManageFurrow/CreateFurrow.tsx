@@ -1,6 +1,7 @@
 import { apiClient } from "../../../../../api/client"
 import CreateCell, { type CellInfo } from "../ManageCell/CreateCell"
-import { useState } from "react"
+import AddFurrowInfo from "./AddFurrowInfo"
+import { useState,useEffect } from "react"
 
 
 // propsで畝id・畝幅を貰う。
@@ -22,10 +23,13 @@ function CreateFurrow (props:CreateFurrowProps) {
     const [furrowInfo,setFurrowInfo] = useState<FurrowInfo>()
     // cell dataを保持
     const [cellInfo,setCellInfo] = useState<CellInfo[]>()
-    const handleFurrowCell = async() => {
+    useEffect(()=>{
+        const handleFurrowCell = async() => {
         // 畝idとfarmManageUuidで畝幅・条数・最小間隔を取得
         // 畝idとfarmManageUuidでcell情報を取得
+        try { 
         const res = await apiClient.getManageFarms2(props.farmUuid,props.farmManageUuid,props.furrowId)
+        console.log("res",res)
         const resFurrowInfo:FurrowInfo = {
             furrowWidth: res.furrowWidth,
             furrowLength:res.furrowLength,
@@ -48,17 +52,30 @@ function CreateFurrow (props:CreateFurrowProps) {
             }
         })
         setCellInfo(resCellInfo)
+        }catch(err){
+            console.log(err)
+        }
     }
-    handleFurrowCell()
+        handleFurrowCell()
+    },[props.farmUuid,props.farmManageUuid,props.furrowId])
+    
     // 畝長÷最小作物間隔でcell数を計算
     let cellNumberPerRow = 0
     if (furrowInfo){
         cellNumberPerRow = Math.floor(furrowInfo.furrowLength/furrowInfo.minPlantSpacing)
     }
 
+    console.log("rows",furrowInfo?.rows)
+    console.log(furrowInfo)
+    console.log("PerRow",cellNumberPerRow)
     // 以上のデータを渡してcellを描画
     return (
         <>
+        <AddFurrowInfo
+        farmUuid={props.farmUuid}
+        farmManageUuid={props.farmManageUuid}
+        rowId={props.furrowId}
+         />
         {furrowInfo &&
         [...Array(furrowInfo.rows)].map((_,rowIndex)=>(
             <div key={rowIndex}>

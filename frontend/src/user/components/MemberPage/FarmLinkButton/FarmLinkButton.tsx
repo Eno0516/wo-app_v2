@@ -1,3 +1,4 @@
+import "./FarmLinkButton.css"
 
 type FarmLinkButtonProps = {
     title:string
@@ -9,7 +10,7 @@ function FarmLinkButton (props:FarmLinkButtonProps) {
         props.onClickLink(props.uuid)
     }
     return (
-        <button onClick={onClickTitle}>{props.title}</button>
+        <button onClick={onClickTitle} className="link-button">{props.title}</button>
     )
 }
 

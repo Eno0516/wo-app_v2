@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import FarmLinkButton from "../FarmLinkButton"
+import FarmLinkButton from "../../FarmLinkButton/FarmLinkButton.tsx"
 import AddFarmButton from "./AddFarmButton"
 import { apiClient } from "../../../../../api/client"
 import { useLocation } from "react-router-dom"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 
 type RegisteredFarm = {
@@ -20,7 +20,8 @@ function ManageFarmArea () {
     const groupUuid = params.get("groupUuid"); 
     const [registeredFarms,setRegisteredFarms] = useState<RegisteredFarm[]>([])
     // userIDから登録圃場一覧情報を取得
-    const handleFarm = async () => {
+    useEffect(()=>{
+        const handleFarm = async () => {
         if(!groupUuid){
             return
         }
@@ -38,6 +39,7 @@ function ManageFarmArea () {
         }
     }
     handleFarm()
+    },[])
     
     // 畑が未登録かどうか
     const isRegisteredFarm = registeredFarms.length !== 0
@@ -54,6 +56,7 @@ function ManageFarmArea () {
             <div>
                 { registeredFarms.map((farm)=>(
                     <FarmLinkButton
+                    key={farm.farmUuid}
                     title={farm.farmName}
                     uuid={farm.farmUuid}
                     onClickLink={()=>navigateFarmPage(farm.farmUuid)}

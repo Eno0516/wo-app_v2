@@ -81,27 +81,6 @@ export class DefaultService {
         });
     }
     /**
-     * Update Farm FarmInfo
-     * @param groupUuid
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static putGroupsManageFarms(
-        groupUuid: string,
-        requestBody: FarmInfoDetail,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/groups/{groupUuid}/manageFarms',
-            path: {
-                'groupUuid': groupUuid,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
      * Get Farm Page Info
      * @param farmUuid
      * @returns FarmPageBasicInfo OK
@@ -136,6 +115,30 @@ export class DefaultService {
                 'farmUuid': farmUuid,
                 'farmManageUuid': farmManageUuid,
             },
+        });
+    }
+    /**
+     * Update Farm FarmInfo
+     * @param farmUuid
+     * @param farmManageUuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static putManageFarms(
+        farmUuid: string,
+        farmManageUuid: string,
+        requestBody: FarmInfoDetail,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
     /**
@@ -189,6 +192,33 @@ export class DefaultService {
         });
     }
     /**
+     * Update Furrow Cell Info
+     * @param farmUuid
+     * @param farmManageUuid
+     * @param rowId
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static putManageFarms1(
+        farmUuid: string,
+        farmManageUuid: string,
+        rowId: number,
+        requestBody: FurrowCellInfo,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}/{rowId}',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+                'rowId': rowId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
      * Create Cell Info
      * @param farmUuid
      * @param farmManageUuid
@@ -205,6 +235,33 @@ export class DefaultService {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
+            url: '/manageFarms/{farmUuid}/{farmManageUuid}/{rowId}/cell',
+            path: {
+                'farmUuid': farmUuid,
+                'farmManageUuid': farmManageUuid,
+                'rowId': rowId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Update Cell Info
+     * @param farmUuid
+     * @param farmManageUuid
+     * @param rowId
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static putManageFarmsCell(
+        farmUuid: string,
+        farmManageUuid: string,
+        rowId: number,
+        requestBody: CellInfo,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
             url: '/manageFarms/{farmUuid}/{farmManageUuid}/{rowId}/cell',
             path: {
                 'farmUuid': farmUuid,

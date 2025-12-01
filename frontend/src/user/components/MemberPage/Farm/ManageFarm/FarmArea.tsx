@@ -2,9 +2,10 @@
 // ここで持っておくのは、畝数とそれぞれの畝id,畝幅
 // ただ畝幅は畝によって変わる可能性あるから、畝側からも情報を得て、リアクティブに表示を変更
 
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import CreateFurrow from "../ManageFurrow/CreateFurrow"
 import { apiClient } from "../../../../../api/client"
+import AddFarmButton from "./AddFarmButton"
 
 type FarmAreaProps = {
     farmUuid: string,
@@ -16,7 +17,8 @@ type FurrowBasicInfo = {
 function FarmArea (props:FarmAreaProps) {
     const [furrowInfo,setFurrowInfo] = useState<FurrowBasicInfo>()
     // 畝数・畝幅を取得
-    const handleFuurowBasicInfo = async() =>{
+    useEffect(()=>{
+        const handleFurrowBasicInfo = async() =>{
         try {
             const res = await apiClient.getManageFarms1(props.farmUuid,props.farmManageUuid)
             setFurrowInfo(res)
@@ -24,12 +26,19 @@ function FarmArea (props:FarmAreaProps) {
             console.log(err)
         }
     }
-    handleFuurowBasicInfo()
-
+    handleFurrowBasicInfo()
+    },[])
+    console.log("furrowInfo",furrowInfo)
     return (
         <div>
+            <AddFarmButton
+            mode="edit"
+            farmUuid={props.farmUuid}
+            farmManageUuid={props.farmManageUuid}
+             />
             {furrowInfo && [...Array(furrowInfo.furrowNumber)].map((_,index)=>(
                 <CreateFurrow
+                key={`${props.farmManageUuid}-${index}`}
                 furrowId={index}
                 farmUuid={props.farmUuid}
                 farmManageUuid={props.farmManageUuid}

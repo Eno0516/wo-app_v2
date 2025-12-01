@@ -3,12 +3,13 @@
 import { useState } from "react"
 import InputPopFarmInfo from "./InputPopFarmInfo"
 
-type AddFarmButtonProps = {
-    mode: "add" | "edit"
-}
+type AddFarmButtonProps =
+  | { mode: "add" }
+  | { mode: "edit"; farmUuid: string;farmManageUuid: string };
 
-function AddFarmButton ({mode}:AddFarmButtonProps) {
+function AddFarmButton (props:AddFarmButtonProps) {
     const [isPopVisible,setIsPopVisible] = useState(false)
+    const buttonLabel = props.mode === "add" ? "畑を追加" : "畑を編集"
     const onClick = () => {
         setIsPopVisible(true)
     }
@@ -17,12 +18,24 @@ function AddFarmButton ({mode}:AddFarmButtonProps) {
     }
     return (
         <>
-        <button onClick={onClick}>畑を追加</button>
+        <button onClick={onClick}>{buttonLabel}</button>
         {isPopVisible && 
-        <InputPopFarmInfo
-            mode={mode}
+        ( props.mode === "add" ? (
+            <InputPopFarmInfo
+            mode="add"
             onClose={onClickPopClose}
         />
+        ) : (
+           <InputPopFarmInfo
+            mode="edit"
+            onClose={onClickPopClose}
+            farmUuid={props.farmUuid}
+            farmManageUuid={props.farmManageUuid}
+        /> 
+        )
+
+    )
+        
         }
         </>
     )

@@ -23,6 +23,7 @@ function InputFarmSeason(props:InputFarmSeasnsProps){
                 <label>
                     <input
                     type="checkbox"
+                    key={obj.id}
                     checked={props.selected.includes(obj.id)}
                     onChange={()=>toggle(obj.id)}
                     />

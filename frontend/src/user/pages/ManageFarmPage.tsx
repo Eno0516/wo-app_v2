@@ -1,7 +1,8 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import { useLocation } from "react-router-dom"
 import FarmArea from "../components/MemberPage/Farm/ManageFarm/FarmArea.tsx";
 import { apiClient } from "../../api/client.ts";
+import { useFarmContext } from "../contexts/FarmContext.tsx";
 //import ClickPopInputBox from "../../share/components/ManagePlant/ClickPopInputBok/clickPopInputBox"
 
 type FarmBasicInfo = {
@@ -15,24 +16,30 @@ function ManageFarmPage () {
     // このページで持っておく情報
     // 時期による畑のuuidなどの情報
     const [farmBasicInfo,setFarmBasicInfo] = useState<FarmBasicInfo[]>([])
+    // Contextに値を詰める
+    const {setFarmName} = useFarmContext()
     // クエリパラメータから畑uuidを取得
     const location = useLocation()
     const params = new URLSearchParams(location.search);
     const farmId = params.get("farmUUID"); 
     // UUIDで登録されている名前・年度・季節一覧を取得
-    const handleManageFarms = async()=>{
+    useEffect(()=> {
+           const handleManageFarms = async()=>{
         if (!farmId){
             return
         }
         try {
             const res = await apiClient.getManageFarms(farmId)
             setFarmBasicInfo(res)
+            setFarmName(farmBasicInfo[0]?.farmName)
         } catch(err){
             console.log(err)
             throw new Error()  
         }
     }
     handleManageFarms()
+    },[farmId])
+ 
     // 初期表示はyear,seasonが一番大きいやつで。今回はそこまでやらんでもいいか
 
     function getTargetFarmUuid(farms: FarmBasicInfo[]): string | null {
@@ -72,7 +79,7 @@ function ManageFarmPage () {
     return(
         <>
         <div>
-            {farmBasicInfo[0].farmName}
+            {farmBasicInfo[0]?.farmName ?? "読み込み中..."}
         </div>
         <div>
             {isBothUuid && (

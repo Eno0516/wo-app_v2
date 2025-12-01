@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
+import ReactDOM from "react-dom"
 import InputCellInfo from "./InputCellInfo"
 import { type CellInfo } from "../CreateCell";
 import InputPoorGrowthReason from "./InputPoorGrowthReason";
@@ -49,55 +50,77 @@ function InputPopCellData({initial, initialPoorReason,onClose}:InputPopCellDataP
         //親へ結果を通知
         onClose()
     }
-    return (
-        <>
-            <div className="overlay">
-                <div className="modal">
-                    <InputCellInfo
+    //モーダル表示管理
+    const [mounted,setMounted] = useState(false)
+    useEffect(() => {
+        setMounted(true)
+    },[])
+    
+    if(!mounted){
+        return null
+    }
+    const modalRoot = document.getElementById('modal-root')
+    if(!modalRoot){
+        return null
+    }
+    const modalContent = (
+        <div className="modal-overlay">
+            <div className="modal">
+                <label>品目</label>
+                <InputCellInfo
                     field={POP_Cell_Data.item}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
-                    <InputCellInfo
+                />
+                <label>品種</label>
+                <InputCellInfo
                     field={POP_Cell_Data.variety}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
-                    <InputCellInfo
+                />
+                <label>作付日</label>
+                <InputCellInfo
                     field={POP_Cell_Data.datePlanted}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
-                    <InputCellInfo
+                />
+                <label>生育段階</label>
+                <InputCellInfo
                     field={POP_Cell_Data.growthStage}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
-                    <InputCellInfo
+                />
+                <label>状態</label>
+                <InputCellInfo
                     field={POP_Cell_Data.status}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
-                    <InputPoorGrowthReason
+                />
+                <label>生育遅れ要因</label>
+                <InputPoorGrowthReason
                     selected={poorReason}
                     onChange={newSelected => handleReasonChange(newSelected)}
-                    />
-                    <InputCellInfo
+                />
+                <label>収穫日</label>
+                <InputCellInfo
                     field={POP_Cell_Data.dateHarvestPlanted}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
-                    <InputCellInfo
+                />
+                <label>メモ</label>
+                <InputCellInfo
                     field={POP_Cell_Data.memo}
                     cellInfo={cellData}
                     setCellInfo={setCellData}
-                    />
+                />
+                <div>
                     <button onClick={()=> onSave}>OK</button>
                     <button onClick={() => handleClose}>Cancel</button>
                 </div>
             </div>
-        </>
+        </div>
     )
+    return ReactDOM.createPortal(modalContent,modalRoot)
 }
 
 export default InputPopCellData
