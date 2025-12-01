@@ -68,6 +68,7 @@ function CreateFurrow (props:CreateFurrowProps) {
     console.log("rows",furrowInfo?.rows)
     console.log(furrowInfo)
     console.log("PerRow",cellNumberPerRow)
+    console.log("cell",cellInfo)
     // 以上のデータを渡してcellを描画
     return (
         <div
@@ -82,7 +83,7 @@ function CreateFurrow (props:CreateFurrowProps) {
          />
          <div
          style={{
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#C5956B",
             display: "flex",
             flexDirection: "row",
             gap: "20px",

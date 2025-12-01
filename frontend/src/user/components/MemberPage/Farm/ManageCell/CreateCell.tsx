@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import InputPopCellData from './InputPopCellData/InputPopCellData'
 
 interface BaseProps {
@@ -30,6 +30,44 @@ function CreateCell (props:Props) {
         rowId,
         ...initial
     } = props
+    // リアクティブにCell情報を管理
+    const [cellState,setCellState] = useState<CellInfo>({
+        row: initial.row,
+        column: initial.column,
+        item: initial.item,
+        variety: initial.variety,
+        datePlanted: initial.datePlanted,
+        growthStage: initial.growthStage,
+        status: initial.status,
+        poorGrowthReason: initial.poorGrowthReason,
+        dateHarvestPlanted: initial.dateHarvestPlanted,
+        memo: initial.memo,
+    })
+    useEffect(()=>{
+        setCellState({
+            row: initial.row,
+        column: initial.column,
+        item: initial.item,
+        variety: initial.variety,
+        datePlanted: initial.datePlanted,
+        growthStage: initial.growthStage,
+        status: initial.status,
+        poorGrowthReason: initial.poorGrowthReason,
+        dateHarvestPlanted: initial.dateHarvestPlanted,
+        memo: initial.memo,
+        })
+    },[
+        initial.row,
+        initial.column,
+        initial.item,
+        initial.variety,
+        initial.datePlanted,
+        initial.growthStage,
+        initial.status,
+        initial.poorGrowthReason,
+        initial.dateHarvestPlanted,
+        initial.memo,
+    ])
     // ポップの表示管理
     const [isVisiblePop,setIsVisiblePop] = useState(false)
 
@@ -44,7 +82,7 @@ function CreateCell (props:Props) {
         <>
       <div onClick={()=>handleClick()}
         style={{
-            backgroundColor:props.item ? "a8e6a2":"fff",
+            backgroundColor:cellState.item ? "#a8e6a2" : "#fff",
             border: "2px solid #ccc",
             boxSizing: "border-box",
             width: "40px",
@@ -59,8 +97,8 @@ function CreateCell (props:Props) {
         farmUuid={farmUuid}
         farmManageUuid={farmManageUuid}
         rowId={rowId}
-        initial={initial}
-        initialPoorReason={[initial.poorGrowthReason]}
+        initial={cellState}
+        initialPoorReason={[cellState.poorGrowthReason]}
         onClose={handleClose}
         />
       }
