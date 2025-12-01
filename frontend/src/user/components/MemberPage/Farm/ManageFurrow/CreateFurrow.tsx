@@ -62,7 +62,7 @@ function CreateFurrow (props:CreateFurrowProps) {
     // 畝長÷最小作物間隔でcell数を計算
     let cellNumberPerRow = 0
     if (furrowInfo){
-        cellNumberPerRow = Math.floor(furrowInfo.furrowLength/furrowInfo.minPlantSpacing)
+        cellNumberPerRow = Math.floor(furrowInfo.furrowLength*100/furrowInfo.minPlantSpacing)
     }
 
     console.log("rows",furrowInfo?.rows)
@@ -70,12 +70,26 @@ function CreateFurrow (props:CreateFurrowProps) {
     console.log("PerRow",cellNumberPerRow)
     // 以上のデータを渡してcellを描画
     return (
-        <>
+        <div
+        style={{
+            alignItems: "center"
+        }}
+        >
         <AddFurrowInfo
         farmUuid={props.farmUuid}
         farmManageUuid={props.farmManageUuid}
         rowId={props.furrowId}
          />
+         <div
+         style={{
+            backgroundColor: "#f9f9f9",
+            display: "flex",
+            flexDirection: "row",
+            gap: "20px",
+            justifyContent: "center",
+            width: "200px",
+         }}
+         >
         {furrowInfo &&
         [...Array(furrowInfo.rows)].map((_,rowIndex)=>(
             <div key={rowIndex}>
@@ -85,7 +99,9 @@ function CreateFurrow (props:CreateFurrowProps) {
                         (c)=>c.row == rowIndex && c.column == columnIndex
                     );
                     return (
-                        <div key={columnIndex}>
+                        <div key={columnIndex}
+                        >
+
                         <CreateCell
                         row={rowIndex}
                         column={columnIndex}
@@ -106,7 +122,8 @@ function CreateFurrow (props:CreateFurrowProps) {
             </div>
         )) 
         }
-        </>
+        </div>
+    </div>
     )
 
 }

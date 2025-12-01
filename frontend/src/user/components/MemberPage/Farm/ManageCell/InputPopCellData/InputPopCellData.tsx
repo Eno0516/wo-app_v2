@@ -34,10 +34,10 @@ export type CellData = {
 }
 
 // 作物管理に必要な情報を入力するためのポップ
-function InputPopCellData({initial, initialPoorReason,onClose}:InputPopCellDataProps,){
-        const [cellData,setCellData] = useState<CellInfo> ({...initial})
+function InputPopCellData(props:InputPopCellDataProps,){
+        const [cellData,setCellData] = useState<CellInfo> ({...props.initial})
     // Reaonだけは形式が違うので別で更新
-    const [poorReason,setPoorReason] = useState<number[]>(initialPoorReason)
+    const [poorReason,setPoorReason] = useState<number[]>(props.initialPoorReason)
     const handleReasonChange = (newSelected:number[]) => {
         setPoorReason(newSelected)
         }
@@ -48,7 +48,8 @@ function InputPopCellData({initial, initialPoorReason,onClose}:InputPopCellDataP
     }
     const handleClose = () => {
         //親へ結果を通知
-        onClose()
+        console.log("click")
+        props.onClose()
     }
     //モーダル表示管理
     const [mounted,setMounted] = useState(false)
@@ -113,9 +114,10 @@ function InputPopCellData({initial, initialPoorReason,onClose}:InputPopCellDataP
                     cellInfo={cellData}
                     setCellInfo={setCellData}
                 />
-                <div>
-                    <button onClick={()=> onSave}>OK</button>
-                    <button onClick={() => handleClose}>Cancel</button>
+                <div className="modal-buttons">
+                    <button  
+                    onClick={()=> onSave}>OK</button>
+                    <button onClick={handleClose}>Cancel</button>
                 </div>
             </div>
         </div>

@@ -28,8 +28,17 @@ function CreateCell (props:CellInfo) {
 
     return (
         <>
-      <div onClick={()=>handleClick()}>
-
+      <div onClick={()=>handleClick()}
+        style={{
+            backgroundColor:props.item ? "a8e6a2":"fff",
+            border: "2px solid #ccc",
+            boxSizing: "border-box",
+            width: "40px",
+            height: "40px",
+            cursor: "pointer"
+        }}
+        >
+        {""}
       </div>
       {isVisiblePop && 
         <InputPopCellData 

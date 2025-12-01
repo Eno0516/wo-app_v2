@@ -59,10 +59,10 @@ function InputPopFurrowInfo(props:BaseProps){
     // 新しい畝情報を登録
     const handleSubmit = async () =>{
         const params: FurrowCellInfo = {
-            furrowWidth: furrowInfo[POP_FURROW_INFO.width],
-            furrowLength: furrowInfo[POP_FURROW_INFO.length],
-            rows: furrowInfo[POP_FURROW_INFO.rows],
-            minPlantSpacing: furrowInfo[POP_FURROW_INFO.minPlantSpace],
+            furrowWidth: Number(furrowInfo[POP_FURROW_INFO.width]),
+            furrowLength: Number(furrowInfo[POP_FURROW_INFO.length]),
+            rows: Number(furrowInfo[POP_FURROW_INFO.rows]),
+            minPlantSpacing: Number(furrowInfo[POP_FURROW_INFO.minPlantSpace]),
             CellInfoArray:[]
         }
         try{
@@ -81,14 +81,14 @@ function InputPopFurrowInfo(props:BaseProps){
     const modalContet = (
         <div className="modal-overlay">
             <div className="modal">
-                <label>幅</label>
+                <label>幅（cm）</label>
                 <InputFurrowInfo
                 field={POP_FURROW_INFO.width}
                 furrowInfo={furrowInfo}
                 setFurrowInfo={setFurrowInfo}
                 placeHolder="幅"
                 />
-                <label>長さ</label>
+                <label>長さ（m）</label>
                 <InputFurrowInfo
                 field={POP_FURROW_INFO.length}
                 furrowInfo={furrowInfo}
@@ -102,7 +102,7 @@ function InputPopFurrowInfo(props:BaseProps){
                 setFurrowInfo={setFurrowInfo}
                 placeHolder="条数"
                 />
-                <label>最小作物間隔</label>
+                <label>最小作物間隔（cm）</label>
                 <InputFurrowInfo
                 field={POP_FURROW_INFO.minPlantSpace}
                 furrowInfo={furrowInfo}

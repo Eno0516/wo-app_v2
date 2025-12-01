@@ -30,12 +30,18 @@ function FarmArea (props:FarmAreaProps) {
     },[])
     console.log("furrowInfo",furrowInfo)
     return (
-        <div>
+        <>
             <AddFarmButton
             mode="edit"
             farmUuid={props.farmUuid}
             farmManageUuid={props.farmManageUuid}
              />
+            <div style={{ 
+            display: "flex",
+            flexDirection: "row", 
+            gap: "16px",
+            padding: "24px",
+            }}>
             {furrowInfo && [...Array(furrowInfo.furrowNumber)].map((_,index)=>(
                 <CreateFurrow
                 key={`${props.farmManageUuid}-${index}`}
@@ -44,7 +50,8 @@ function FarmArea (props:FarmAreaProps) {
                 farmManageUuid={props.farmManageUuid}
                  />
             ))}          
-        </div>       
+        </div>  
+    </>     
     )
 }
 
