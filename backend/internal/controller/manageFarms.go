@@ -48,6 +48,7 @@ func (m *ManageFarmsAPI) PostGroupsGroupUuidManageFarms(c *gin.Context, groupUui
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "register failed"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "success!!"})
 }
 
 func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuid(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID) {
@@ -63,6 +64,7 @@ func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuid(c *gin.Context, fa
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "update failed"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "success!!"})
 }
 
 func (m *ManageFarmsAPI) GetManageFarmsFarmUuid(c *gin.Context, farmUuid openapi_types.UUID) {
@@ -110,6 +112,7 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Conte
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "success!!"})
 }
 
 // 畝・Cell情報を更新
@@ -126,6 +129,7 @@ func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Contex
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "success!!"})
 }
 
 // Cell情報を作成
@@ -142,6 +146,7 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.C
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "success!!"})
 }
 
 // Cell情報を更新
@@ -158,4 +163,5 @@ func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Co
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "success!!"})
 }
