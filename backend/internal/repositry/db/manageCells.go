@@ -46,35 +46,54 @@ func (r *DBRepositry) CreateCellInfo(farmManageUuid openapi_types.UUID, furrowId
 		return uuidErr
 	}
 	layout := "2006-01-02"
-	t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
-	if timeErr != nil {
-		return timeErr
+	var plantedAt default_sql.NullTime
+	if cellInfo.DatePlanted != "" {
+		t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
+		if timeErr != nil {
+			return timeErr
+		}
+		plantedAt = default_sql.NullTime{
+			Time:  t,
+			Valid: true,
+		}
+	} else {
+		plantedAt = default_sql.NullTime{
+			Valid: false,
+		}
 	}
 	invarCellParams := sql.CreateInvariableCellInfoParams{
 		CellID:      cellUuid,
 		Item:        cellInfo.CropItem,
 		Variety:     cellInfo.Variety,
-		DatePlanted: t,
+		DatePlanted: plantedAt.Time,
 	}
 	invarCellerr := r.q.CreateInvariableCellInfo(ctx, invarCellParams)
 	if invarCellerr != nil {
 		return invarCellerr
 	}
-	ht, hTimeErr := time.Parse(layout, cellInfo.DateHarvestPlanted)
-	if hTimeErr != nil {
-		return hTimeErr
+	var harvestAt default_sql.NullTime
+	if cellInfo.DateHarvestPlanted != "" {
+		ht, hTimeErr := time.Parse(layout, cellInfo.DateHarvestPlanted)
+		if hTimeErr != nil {
+			return hTimeErr
+		}
+		harvestAt = default_sql.NullTime{
+			Time:  ht,
+			Valid: true,
+		}
+	} else {
+		harvestAt = default_sql.NullTime{
+			Valid: false,
+		}
 	}
-	nht := default_sql.NullTime{
-		Time:  ht,
-		Valid: true,
-	}
+
 	nMemo := default_sql.NullString{
 		String: cellInfo.Memo,
 		Valid:  true,
 	}
 	varCellParas := sql.CreateVariableCellInfoParams{
 		CellID:             cellUuid,
-		DateHarvestPlanted: nht,
+		DateHarvestPlanted: harvestAt,
 		Memo:               nMemo,
 	}
 	varCellErr := r.q.CreateVariableCellInfo(ctx, varCellParas)
@@ -111,35 +130,55 @@ func (r *DBRepositry) UpdateCellInfo(farmManageUuid openapi_types.UUID, furrowId
 		return uuidErr
 	}
 	layout := "2006-01-02"
-	t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
-	if timeErr != nil {
-		return timeErr
+	var plantedAt default_sql.NullTime
+	if cellInfo.DatePlanted != "" {
+		t, timeErr := time.Parse(layout, cellInfo.DatePlanted)
+		if timeErr != nil {
+			return timeErr
+		}
+		plantedAt = default_sql.NullTime{
+			Time:  t,
+			Valid: true,
+		}
+	} else {
+		plantedAt = default_sql.NullTime{
+			Valid: false,
+		}
 	}
 	invarCellParams := sql.UpdateInvariableCellInfoParams{
 		CellID:      cellUuid,
 		Item:        cellInfo.CropItem,
 		Variety:     cellInfo.Variety,
-		DatePlanted: t,
+		DatePlanted: plantedAt.Time,
 	}
 	invarCellerr := r.q.UpdateInvariableCellInfo(ctx, invarCellParams)
 	if invarCellerr != nil {
 		return invarCellerr
 	}
-	ht, hTimeErr := time.Parse(layout, cellInfo.DateHarvestPlanted)
-	if hTimeErr != nil {
-		return hTimeErr
+
+	var harvestAt default_sql.NullTime
+	if cellInfo.DateHarvestPlanted != "" {
+		ht, hTimeErr := time.Parse(layout, cellInfo.DateHarvestPlanted)
+		if hTimeErr != nil {
+			return hTimeErr
+		}
+		harvestAt = default_sql.NullTime{
+			Time:  ht,
+			Valid: true,
+		}
+	} else {
+		harvestAt = default_sql.NullTime{
+			Valid: false,
+		}
 	}
-	nht := default_sql.NullTime{
-		Time:  ht,
-		Valid: true,
-	}
+
 	nMemo := default_sql.NullString{
 		String: cellInfo.Memo,
 		Valid:  true,
 	}
 	varCellParas := sql.UpdateVariableCellInfoParams{
 		CellID:             cellUuid,
-		DateHarvestPlanted: nht,
+		DateHarvestPlanted: harvestAt,
 		Memo:               nMemo,
 	}
 	varCellErr := r.q.UpdateVariableCellInfo(ctx, varCellParas)

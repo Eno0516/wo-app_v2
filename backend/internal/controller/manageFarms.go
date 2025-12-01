@@ -114,7 +114,18 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Conte
 
 // 畝・Cell情報を更新
 func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowId(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
-
+	var req api.FurrowCellInfo
+	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	err := m.svc.UpdateFurrowCellInfo(farmUuid, farmManageUuid, rowId, req)
+	if err != nil {
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
+		return
+	}
 }
 
 // Cell情報を作成
@@ -135,5 +146,16 @@ func (m *ManageFarmsAPI) PostManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.C
 
 // Cell情報を更新
 func (m *ManageFarmsAPI) PutManageFarmsFarmUuidFarmManageUuidRowIdCell(c *gin.Context, farmUuid openapi_types.UUID, farmManageUuid openapi_types.UUID, rowId int32) {
-
+	var req api.CellInfo
+	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	err := m.svc.UpdateCellInfo(farmUuid, farmManageUuid, rowId, req)
+	if err != nil {
+		log.Printf("failed:%v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal error"})
+		return
+	}
 }
