@@ -65,10 +65,6 @@ function CreateFurrow (props:CreateFurrowProps) {
         cellNumberPerRow = Math.floor(furrowInfo.furrowLength*100/furrowInfo.minPlantSpacing)
     }
 
-    console.log("rows",furrowInfo?.rows)
-    console.log(furrowInfo)
-    console.log("PerRow",cellNumberPerRow)
-    console.log("cell",cellInfo)
     // 以上のデータを渡してcellを描画
     return (
         <div

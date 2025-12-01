@@ -40,14 +40,22 @@ export type CellData = {
 
 // 作物管理に必要な情報を入力するためのポップ
 function InputPopCellData(props:InputPopCellDataProps,){
-    const [cellData,setCellData] = useState<CellInfo> ({...props.initial})
+    // Jsonがから文字だとTimeｗ入れてしまうので成形
+    const normalizeDate = (value: string | null | undefined) => {
+        return value?.startsWith("0001-01-01") ? "" : value ?? ""
+    }
+    const [cellData,setCellData] = useState<CellInfo> ({
+        ...props.initial,
+        datePlanted: normalizeDate(props.initial.datePlanted),
+        dateHarvestPlanted: normalizeDate(props.initial.dateHarvestPlanted)
+    })
     // Reaonだけは形式が違うので別で更新
     const [poorReason,setPoorReason] = useState<number[]>(props.initialPoorReason)
     const handleReasonChange = (newSelected:number[]) => {
         setPoorReason(newSelected)
     }
     // 新規保存か更新か
-    const isUpdate = props.initial.row && props.initial.column
+    const isUpdate = cellData.row !== undefined && cellData.column !== undefined
     // cell情報を保存
     const onSave = async() => {
         const params:generatedCellInfo = {
