@@ -78,6 +78,9 @@ function InputPopCellData(props:InputPopCellDataProps,){
                 }
             } catch(err){
                 console.error(err)
+            } finally{
+                props.onClose()
+                window.location.reload()
             }
         } else{
         try{
