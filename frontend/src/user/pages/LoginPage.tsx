@@ -17,7 +17,6 @@ function LoginPage() {
             groupId:groupId,
             password: password
         }
-        console.log("req",requestBody)
         try {
             const res = await apiClient.postLogin(requestBody)
             console.log("res",res)
@@ -34,7 +33,14 @@ function LoginPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} 
+        style=
+        {{
+            display: "flex", 
+            flexDirection: "column", 
+            gap: "12px",
+        }}
+        >
             <h1>ログイン</h1>
             <input
                 placeholder="グループID"
