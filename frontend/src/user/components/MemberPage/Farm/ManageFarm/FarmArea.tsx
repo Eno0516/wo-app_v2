@@ -28,7 +28,7 @@ function FarmArea (props:FarmAreaProps) {
     }
     handleFurrowBasicInfo()
     },[])
-    console.log("furrowInfo",furrowInfo)
+    
     return (
         <>
             <AddFarmButton
