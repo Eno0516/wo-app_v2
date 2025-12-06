@@ -16,7 +16,6 @@ frontend/.cache/
 backend/bin/
 backend/tmp/
 backend/coverage/
-backend/cmd/webserver/tmp.*
 *.exe
 *.out
 

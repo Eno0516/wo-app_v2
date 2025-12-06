@@ -48,28 +48,12 @@ function ManageFarmArea () {
         navigate(`/manageFarm?farmUUID=${result}`)
     }
     return (
-        <div style={{ padding: "16px" }}>
-            <div
-            style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: "12px",
-            }}
-            >
-                <AddFarmButton 
-                    mode="add"
-                />
-            </div>
+        <div className="content-box">
+            <div><AddFarmButton 
+            mode="add"
+            /></div>
             {isRegisteredFarm && 
-            <div
-            style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "16px",
-                maxWidth: "500px",
-                minWidth: "250px"
-            }}
-            >
+            <div>
                 { registeredFarms.map((farm)=>(
                     <FarmLinkButton
                     key={farm.farmUuid}

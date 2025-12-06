@@ -78,9 +78,7 @@ function ManageFarmPage () {
 
     return(
         <>
-        <div
-        style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "16px" }}
-        >
+        <div>
             {farmBasicInfo[0]?.farmName ?? "読み込み中..."}
         </div>
         <div>
