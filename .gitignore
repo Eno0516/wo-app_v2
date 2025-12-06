@@ -15,6 +15,7 @@ frontend/.cache/
 # バックエンド（Go）
 backend/bin/
 backend/tmp/
+backend/cmd/webserver/tmp.*
 backend/coverage/
 *.exe
 *.out
