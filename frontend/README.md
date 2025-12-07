@@ -1,4 +1,55 @@
-# React + TypeScript + Vite
+# frontendの説明
+  
+## リポジトリー構成
+```text
+.
+├── .firebase/
+├── .openapi/
+├── dist/
+├── node_modules/
+├── public/
+├── src/
+├── .env.deployment
+├── .env.production
+├── Dockerfile.prod
+├── .firebase
+├── .gitignore
+├── Dockerfile
+├── eslint.config.js
+├── firebase.json
+├── index.html
+├── .package-lock.json
+├── .package.json
+├── tscongig.app.json
+├── tscongig.app.tsbuilinfo
+├── tscongig.json
+├── tscongig.node.json
+├── tscongig.node.tsbuildinfo
+├── vite.config.json
+├── README.md
+```
+
+### src/user/components 
+* UI表示に必要なコンポーネントを管理する
+* 1機能を提供するコンポーネント（ボタンなど）に対し、1つのフォルダを作って管理する
+  * 例
+  ```text
+  componetns
+  ├── MemberPage/
+      └── Button/
+          └── Button.tsx
+          └── Button.css
+          └── composable.ts
+          └── Funk~~.ts
+  ```
+  * 一つのコンポーネントに対しフォルダを1つ作成し、その中にtsxファイルとcssファイルを作成する
+    * 初期に作ったものはこれに従っていないため、順次リファクタリング
+  * tsxファイルのロジック部分が共通化出来る場合はuser/hooksに切り出す
+  * 単純にファイルが長く可読性が落ちるなどの理由でロジックを切り出す場合は、  
+    同じフォルダ内に関数名.tsファイルのように基本的には関数単位でロジックを切り出す
+  * 小さな関数や、関数が密関係な場合はcomposable.tsファイルにまとめて切り出す
+
+# 自動生成ReadMe React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

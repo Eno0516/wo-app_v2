@@ -1,6 +1,24 @@
 # backendの説明
   
 ## リポジトリー構成
+```text
+.
+├── .openapi/
+├── cmd/webserver
+├── generated/
+│   └── api/
+|   └── aql/
+├── internal/
+├── pkg/
+├── sqlc/
+├── .env.local
+├── Dockerfile.dev
+├── Dockerfile.prod
+├── go.mod
+├── go.sum
+├── README.md
+```
+
 ### internal ディレクトリ
 * **initialize**
   * DB,APIなどの初期化処理

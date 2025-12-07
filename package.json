@@ -5,6 +5,12 @@
   },
   "scripts": {
     "bundle-api": "swagger-cli bundle -o dist/openapi-bundle.yaml -t yaml api-specs/openapi.yaml",
-    "generate-api": "openapi-generator-cli generate -i dist/openapi-bundled.yaml -g typescript-fetch -o generated/api-client"
+    "generate-api": "openapi-generator-cli generate -i dist/openapi-bundled.yaml -g typescript-fetch -o generated/api-client",
+    "make-migration": "./scripts/make_migrationFile.sh",
+    "migrate": "./scripts/migrate.sh",
+    "sqlc-gen": "./scripts/sqlc-gen.sh",
+    "redocly": "./openapi/redocly.sh",
+    "front:api": "./frontend/.openapi/generate.sh",
+    "back:api": "./frontend/.openapi/generate.sh"
   }
 }
