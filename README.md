@@ -35,9 +35,9 @@
 ```
 ## 詳細
 ### backend
-* [バックエンドReadMe](backend\ReadMe.md)
+* [バックエンドReadMe](backend/ReadMe.md)
 ### frontend
-* [フロントエンドReadMe](frontend\ReadMe.md)
+* [フロントエンドReadMe](frontend/ReadMe.md)
 ### db
 #### migrationファイルを格納するディレクトリ
 ### api-specs
