@@ -65,17 +65,32 @@ function InputPopFurrowInfo(props:BaseProps){
             minPlantSpacing: Number(furrowInfo[POP_FURROW_INFO.minPlantSpace]),
             CellInfoArray:[]
         }
-        try{
-            const res = await apiClient.postManageFarms(props.farmUuid,props.farmManageUuid,props.rowId,params)
-            if (!res.ok){
+        // PostかPutか どれか一つでも存在すればupdate
+        const isUpdate = !!furrowInfo[POP_FURROW_INFO.width]
+        if (isUpdate) {
+            try {
+                const res = await apiClient.putManageFarms1(props.farmUuid,props.farmManageUuid,props.rowId,params)
+                if (!res.ok){
                 throw new Error()
+                }
+            }catch(err){
+                console.log(err)
             }
-        } catch(err){
-            console.error(err)
-        } finally {
-            props.onClose()
-            window.location.reload()
+        } else {
+            try{
+                const res = await apiClient.postManageFarms(props.farmUuid,props.farmManageUuid,props.rowId,params)
+                if (!res.ok){
+                    throw new Error()
+            }
+            } catch(err){
+                console.error(err)
+            } finally {
+                props.onClose()
+                window.location.reload()
+            }
         }
+
+        
     }
     // モーダルの中身
     const modalContet = (
