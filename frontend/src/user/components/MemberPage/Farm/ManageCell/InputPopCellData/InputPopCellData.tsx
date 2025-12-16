@@ -55,7 +55,7 @@ function InputPopCellData(props:InputPopCellDataProps,){
         setPoorReason(newSelected)
     }
     // 新規保存か更新か Post時にitemだけは必須項目にしているのでそれで判断
-    const isUpdate = cellData.item !== "" 
+    const isUpdate = props.initial.item !== "" 
     // cell情報を保存
     const onSave = async() => {
         const params:generatedCellInfo = {
